@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dosho Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root {
+    --bg: #07070d;
+    --surface: #12121e;
+    --surface-elevated: #181826;
+    --border: rgba(255,255,255,0.08);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255,255,255,0.65);
+    --text-tertiary: rgba(255,255,255,0.4);
+    --accent: #f72585;
+    --accent-2: #b5179e;
+    --danger: #ff5a5a;
+    --warning: #ffc107;
+    --online: #34d399;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+  }
+  a { color: var(--accent); }
+  .hidden { display: none !important; }
+
+  /* Login */
+  #loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .login-card {
+    width: 100%;
+    max-width: 360px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px;
+  }
+  .login-logo {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 4px;
+  }
+  .login-sub { color: var(--text-secondary); font-size: 13px; margin-bottom: 24px; }
+  input[type="password"], input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  input:focus { outline: none; border-color: var(--accent); }
+  button {
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .btn-primary:disabled { opacity: 0.5; cursor: default; }
+  .error-text { color: var(--danger); font-size: 13px; margin: 8px 0; }
+
+  /* Shell */
+  #appShell { display: flex; min-height: 100vh; }
+  nav.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 20px 12px;
+  }
+  .sidebar-logo {
+    font-weight: 800;
+    font-size: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 0 10px 20px;
+  }
+  .nav-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .nav-item.active { background: var(--surface-elevated); color: var(--text-primary); }
+  .nav-item:hover { color: var(--text-primary); }
+  main { flex: 1; padding: 28px 32px; max-width: 1100px; }
+  h1 { font-size: 22px; margin: 0 0 20px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); margin-bottom: 6px; }
+  .stat-value { font-size: 22px; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-tertiary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
+  tr:last-child td { border-bottom: none; }
+
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill-pending { background: rgba(255,193,7,0.15); color: var(--warning); }
+  .pill-approved, .pill-paid, .pill-confirmed { background: rgba(52,211,153,0.15); color: var(--online); }
+  .pill-rejected, .pill-failed { background: rgba(255,90,90,0.15); color: var(--danger); }
+
+  .btn-sm {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .btn-approve { background: var(--online); color: #04150e; }
+  .btn-reject { background: var(--danger); color: white; }
+  .btn-neutral { background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border); }
+
+  .tab-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+  .tab-btn { padding: 6px 14px; border-radius: 999px; background: var(--surface-elevated); color: var(--text-secondary); font-size: 13px; }
+  .tab-btn.active { background: var(--accent); color: white; }
+
+  .doc-links a { margin-right: 10px; font-size: 12px; }
+
+  .loading, .empty { color: var(--text-tertiary); padding: 20px; text-align: center; }
+
+  @media (max-width: 720px) {
+    #appShell { flex-direction: column; }
+    nav.sidebar { width: 100%; display: flex; align-items: center; gap: 8px; padding: 12px; overflow-x: auto; }
+    .sidebar-logo { padding: 0 10px 0 0; }
+    main { padding: 16px; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">dosho</div>
+    <div class="login-sub">Admin dashboard</div>
+    <input type="password" id="passwordInput" placeholder="Admin password" />
+    <div class="error-text hidden" id="loginError"></div>
+    <button class="btn-primary" id="loginBtn">Sign In</button>
+  </div>
+</div>
+
+<div id="appShell" class="hidden">
+  <nav class="sidebar">
+    <div class="sidebar-logo">dosho</div>
+    <button class="nav-item active" data-view="overview">Overview</button>
+    <button class="nav-item" data-view="users">Users</button>
+    <button class="nav-item" data-view="verifications">Verifications</button>
+    <button class="nav-item" data-view="payouts">Payouts</button>
+    <button class="nav-item" data-view="transactions">Transactions</button>
+    <button class="nav-item" id="logoutBtn" style="margin-top: 20px; color: var(--text-tertiary);">Log out</button>
+  </nav>
+  <main>
+    <div id="view-overview"></div>
+    <div id="view-users" class="hidden"></div>
+    <div id="view-verifications" class="hidden"></div>
+    <div id="view-payouts" class="hidden"></div>
+    <div id="view-transactions" class="hidden"></div>
+  </main>
+</div>
+
+<script>
+const API_BASE = "https://dosho-api-production.up.railway.app";
+const TOKEN_KEY = "dosho_admin_token";
+
+function getToken() { return localStorage.getItem(TOKEN_KEY); }
+function setToken(t) { localStorage.setItem(TOKEN_KEY, t); }
+function clearToken() { localStorage.removeItem(TOKEN_KEY); }
+
+async function api(path, options = {}) {
+  const res = await fetch(API_BASE + path, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + getToken(),
+      ...(options.headers || {}),
+    },
+  });
+  if (res.status === 401) {
+    clearToken();
+    showLogin();
+    throw new Error("Session expired");
+  }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Request failed");
+  return data;
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+}
+
+function pillHtml(status) {
+  const cls = "pill-" + status;
+  return `<span class="pill ${cls}">${status}</span>`;
+}
+
+function showLogin() {
+  document.getElementById("loginScreen").classList.remove("hidden");
+  document.getElementById("appShell").classList.add("hidden");
+}
+
+function showApp() {
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("appShell").classList.remove("hidden");
+  loadView(currentView);
+}
+
+document.getElementById("loginBtn").addEventListener("click", login);
+document.getElementById("passwordInput").addEventListener("keydown", (e) => { if (e.key === "Enter") login(); });
+
+async function login() {
+  const password = document.getElementById("passwordInput").value;
+  const errorEl = document.getElementById("loginError");
+  errorEl.classList.add("hidden");
+  try {
+    const res = await fetch(API_BASE + "/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Login failed");
+    setToken(data.token);
+    showApp();
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.classList.remove("hidden");
+  }
+}
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  clearToken();
+  showLogin();
+});
+
+let currentView = "overview";
+document.querySelectorAll(".nav-item[data-view]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-item[data-view]").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll("main > div").forEach((v) => v.classList.add("hidden"));
+    currentView = btn.dataset.view;
+    document.getElementById("view-" + currentView).classList.remove("hidden");
+    loadView(currentView);
+  });
+});
+
+function loadView(view) {
+  if (view === "overview") loadOverview();
+  if (view === "users") loadUsers();
+  if (view === "verifications") loadVerifications("pending");
+  if (view === "payouts") loadPayouts("pending");
+  if (view === "transactions") loadTransactions();
+}
+
+// ---- Overview ----
+async function loadOverview() {
+  const el = document.getElementById("view-overview");
+  el.innerHTML = `<h1>Overview</h1><div class="loading">Loading...</div>`;
+  try {
+    const data = await api("/admin/overview");
+    el.innerHTML = `
+      <h1>Overview</h1>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value">${data.totalUsers}</div></div>
+        <div class="stat-card"><div class="stat-label">Active Creators</div><div class="stat-value">${data.activeCreators}</div></div>
+        <div class="stat-card"><div class="stat-label">Pending Verifications</div><div class="stat-value">${data.pendingVerifications}</div></div>
+        <div class="stat-card"><div class="stat-label">Pending Payouts</div><div class="stat-value">${data.pendingPayouts}</div></div>
+        <div class="stat-card"><div class="stat-label">Platform Revenue</div><div class="stat-value">KES ${data.platformRevenueKes.toLocaleString()}</div></div>
+      </div>
+    `;
+  } catch (err) {
+    el.innerHTML = `<h1>Overview</h1><div class="error-text">${err.message}</div>`;
+  }
+}
+
+// ---- Users ----
+async function loadUsers() {
+  const el = document.getElementById("view-users");
+  el.innerHTML = `<h1>Users</h1><div class="loading">Loading...</div>`;
+  try {
+    const users = await api("/admin/users?limit=100");
+    if (!users.length) { el.innerHTML = `<h1>Users</h1><div class="empty">No users yet.</div>`; return; }
+    el.innerHTML = `<h1>Users</h1><table>
+      <thead><tr><th>Email</th><th>Role</th><th>Active</th><th>Joined</th></tr></thead>
+      <tbody>${users.map(u => `<tr><td>${u.email}</td><td>${u.role}</td><td>${u.isActive ? "Yes" : "No"}</td><td>${fmtDate(u.createdAt)}</td></tr>`).join("")}</tbody>
+    </table>`;
+  } catch (err) {
+    el.innerHTML = `<h1>Users</h1><div class="error-text">${err.message}</div>`;
+  }
+}
+
+// ---- Verifications ----
+async function loadVerifications(status) {
+  const el = document.getElementById("view-verifications");
+  el.innerHTML = renderTabs("verifications", ["pending", "approved", "rejected"], status) + `<div class="loading">Loading...</div>`;
+  try {
+    const items = await api("/admin/verifications?status=" + status);
+    const body = el.querySelector(".loading")?.parentElement || el;
+    const tableHtml = !items.length ? `<div class="empty">No ${status} verifications.</div>` : `<table>
+      <thead><tr><th>User</th><th>Legal Name</th><th>ID Type</th><th>Photos</th><th>Submitted</th><th>Actions</th></tr></thead>
+      <tbody>${items.map(v => `
+        <tr>
+          <td>${v.email}</td>
+          <td>${v.legalFullName || "—"}</td>
+          <td>${v.idType || "—"}</td>
+          <td class="doc-links">
+            ${v.idPhotoUrl ? `<a href="#" onclick="viewPrivateImage('${v.idPhotoUrl}'); return false;">ID</a>` : ""}
+            ${v.selfieUrl ? `<a href="#" onclick="viewPrivateImage('${v.selfieUrl}'); return false;">Selfie</a>` : ""}
+          </td>
+          <td>${fmtDate(v.submittedAt)}</td>
+          <td>
+            ${v.status === "pending" ? `
+              <button class="btn-sm btn-approve" onclick="reviewVerification('${v.id}', true)">Approve</button>
+              <button class="btn-sm btn-reject" onclick="reviewVerification('${v.id}', false)">Reject</button>
+            ` : pillHtml(v.status)}
+          </td>
+        </tr>
+      `).join("")}</tbody>
+    </table>`;
+    el.innerHTML = renderTabs("verifications", ["pending", "approved", "rejected"], status) + tableHtml;
+  } catch (err) {
+    el.innerHTML = renderTabs("verifications", ["pending", "approved", "rejected"], status) + `<div class="error-text">${err.message}</div>`;
+  }
+}
+
+// Private uploads require the admin bearer token, which a plain <a href>
+// click can't send — fetch as a blob with the header, then open the
+// resulting object URL instead.
+window.viewPrivateImage = async function (url) {
+  try {
+    const path = url.replace(API_BASE, "");
+    const res = await fetch(API_BASE + path, { headers: { Authorization: "Bearer " + getToken() } });
+    if (!res.ok) throw new Error("Could not load image");
+    const blob = await res.blob();
+    window.open(URL.createObjectURL(blob), "_blank");
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+window.reviewVerification = async function (id, approve) {
+  let rejectionReason;
+  if (!approve) {
+    rejectionReason = prompt("Rejection reason (shown to no one yet, stored for records):") || "Did not meet verification requirements";
+  }
+  try {
+    await api(`/admin/verifications/${id}/review`, {
+      method: "POST",
+      body: JSON.stringify({ approve, rejectionReason }),
+    });
+    loadVerifications(document.querySelector('#view-verifications .tab-btn.active')?.dataset.tab || "pending");
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+// ---- Payouts ----
+async function loadPayouts(status) {
+  const el = document.getElementById("view-payouts");
+  el.innerHTML = renderTabs("payouts", ["pending", "paid", "rejected"], status) + `<div class="loading">Loading...</div>`;
+  try {
+    const items = await api("/admin/payouts?status=" + status);
+    const tableHtml = !items.length ? `<div class="empty">No ${status} payouts.</div>` : `<table>
+      <thead><tr><th>User</th><th>Amount</th><th>Method</th><th>Account</th><th>Requested</th><th>Actions</th></tr></thead>
+      <tbody>${items.map(p => `
+        <tr>
+          <td>${p.email}</td>
+          <td>${p.coinAmount} coins · KES ${p.amountKes}</td>
+          <td>${p.method}</td>
+          <td>${p.accountNumber}</td>
+          <td>${fmtDate(p.requestedAt)}</td>
+          <td>
+            ${p.status === "pending" ? `
+              <button class="btn-sm btn-approve" onclick="markPaid('${p.id}')">Mark Paid</button>
+              <button class="btn-sm btn-reject" onclick="rejectPayout('${p.id}')">Reject</button>
+            ` : pillHtml(p.status)}
+          </td>
+        </tr>
+      `).join("")}</tbody>
+    </table>`;
+    el.innerHTML = renderTabs("payouts", ["pending", "paid", "rejected"], status) + tableHtml;
+  } catch (err) {
+    el.innerHTML = renderTabs("payouts", ["pending", "paid", "rejected"], status) + `<div class="error-text">${err.message}</div>`;
+  }
+}
+
+window.markPaid = async function (id) {
+  try {
+    await api(`/admin/payouts/${id}/mark-paid`, { method: "POST" });
+    loadPayouts(document.querySelector('#view-payouts .tab-btn.active')?.dataset.tab || "pending");
+  } catch (err) { alert(err.message); }
+};
+
+window.rejectPayout = async function (id) {
+  const reason = prompt("Rejection reason (coins will be refunded to the creator):") || "Rejected by admin";
+  try {
+    await api(`/admin/payouts/${id}/reject`, { method: "POST", body: JSON.stringify({ reason }) });
+    loadPayouts(document.querySelector('#view-payouts .tab-btn.active')?.dataset.tab || "pending");
+  } catch (err) { alert(err.message); }
+};
+
+// ---- Transactions ----
+async function loadTransactions() {
+  const el = document.getElementById("view-transactions");
+  el.innerHTML = `<h1>Transactions</h1><div class="loading">Loading...</div>`;
+  try {
+    const items = await api("/admin/transactions?limit=100");
+    if (!items.length) { el.innerHTML = `<h1>Transactions</h1><div class="empty">No transactions yet.</div>`; return; }
+    el.innerHTML = `<h1>Transactions</h1><table>
+      <thead><tr><th>User</th><th>Amount</th><th>Reason</th><th>Date</th></tr></thead>
+      <tbody>${items.map(t => `
+        <tr>
+          <td>${t.email}</td>
+          <td style="color: ${t.amount >= 0 ? 'var(--online)' : 'var(--danger)'}">${t.amount >= 0 ? "+" : ""}${t.amount}</td>
+          <td>${t.reason}</td>
+          <td>${fmtDate(t.createdAt)}</td>
+        </tr>
+      `).join("")}</tbody>
+    </table>`;
+  } catch (err) {
+    el.innerHTML = `<h1>Transactions</h1><div class="error-text">${err.message}</div>`;
+  }
+}
+
+// ---- Shared tab bar ----
+function renderTabs(view, statuses, active) {
+  const title = view.charAt(0).toUpperCase() + view.slice(1);
+  return `<h1>${title}</h1><div class="tab-bar">${statuses.map(s =>
+    `<button class="tab-btn ${s === active ? 'active' : ''}" data-tab="${s}" onclick="window.load${title}('${s}')">${s}</button>`
+  ).join("")}</div>`;
+}
+window.loadVerifications = loadVerifications;
+window.loadPayouts = loadPayouts;
+
+// ---- Init ----
+if (getToken()) {
+  showApp();
+} else {
+  showLogin();
+}
+</script>
+</body>
+</html>
