@@ -360,6 +360,14 @@ async function loadOverview() {
         <div class="stat-card"><div class="stat-label">Pending Payouts</div><div class="stat-value">${data.pendingPayouts}</div></div>
         <div class="stat-card"><div class="stat-label">Platform Revenue</div><div class="stat-value">KES ${data.platformRevenueKes.toLocaleString()}</div></div>
       </div>
+      <h1 style="font-size:16px;margin-top:8px;">Match</h1>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Available Now</div><div class="stat-value">${data.match.creatorsAvailable}</div></div>
+        <div class="stat-card"><div class="stat-label">Currently Engaged</div><div class="stat-value">${data.match.creatorsEngaged}</div></div>
+        <div class="stat-card"><div class="stat-label">Requests Today</div><div class="stat-value">${data.match.requestsToday}</div></div>
+        <div class="stat-card"><div class="stat-label">Matched Today</div><div class="stat-value">${data.match.successfulMatchesToday}</div></div>
+        <div class="stat-card"><div class="stat-label">Match Coins Earned</div><div class="stat-value">${data.match.totalMatchCallCoins.toLocaleString()}</div></div>
+      </div>
     `;
   } catch (err) {
     el.innerHTML = `<h1>Overview</h1><div class="error-text">${err.message}</div>`;
