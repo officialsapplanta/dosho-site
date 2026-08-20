@@ -28,8 +28,10 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
   }
-  a { color: var(--accent); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
   .hidden { display: none !important; }
+  button { transition: background 0.15s ease, opacity 0.15s ease, transform 0.1s ease; }
 
   /* Login */
   #loginScreen {
@@ -38,6 +40,19 @@
     align-items: center;
     justify-content: center;
     padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  #loginScreen::before {
+    content: "";
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(247,37,133,0.14) 0%, rgba(181,23,158,0.05) 45%, transparent 70%);
+    pointer-events: none;
   }
   .login-card {
     width: 100%;
@@ -46,6 +61,8 @@
     border: 1px solid var(--border);
     border-radius: 18px;
     padding: 32px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
   }
   .login-logo {
     font-size: 28px;
@@ -66,6 +83,7 @@
     color: var(--text-primary);
     font-size: 14px;
     margin-bottom: 12px;
+    transition: border-color 0.15s ease;
   }
   input:focus { outline: none; border-color: var(--accent); }
   button {
@@ -82,6 +100,7 @@
     font-weight: 600;
     font-size: 14px;
   }
+  .btn-primary:hover:not(:disabled) { opacity: 0.92; }
   .btn-primary:disabled { opacity: 0.5; cursor: default; }
   .error-text { color: var(--danger); font-size: 13px; margin: 8px 0; }
 
@@ -93,6 +112,8 @@
     background: var(--surface);
     border-right: 1px solid var(--border);
     padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
   }
   .sidebar-logo {
     font-weight: 800;
@@ -104,7 +125,9 @@
     padding: 0 10px 20px;
   }
   .nav-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     width: 100%;
     text-align: left;
     padding: 10px 12px;
@@ -112,26 +135,35 @@
     background: transparent;
     color: var(--text-secondary);
     font-size: 14px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
+    border-left: 2px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
-  .nav-item.active { background: var(--surface-elevated); color: var(--text-primary); }
-  .nav-item:hover { color: var(--text-primary); }
+  .nav-item .nav-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.75; }
+  .nav-item.active { background: var(--surface-elevated); color: var(--text-primary); border-left-color: var(--accent); }
+  .nav-item.active .nav-icon { opacity: 1; }
+  .nav-item:hover { color: var(--text-primary); background: var(--surface-elevated); }
   main { flex: 1; padding: 28px 32px; max-width: 1100px; }
-  h1 { font-size: 22px; margin: 0 0 20px; }
+  h1 { font-size: 22px; margin: 0 0 20px; letter-spacing: -0.01em; }
   .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
   .stat-card {
     background: var(--surface);
+    background-image: radial-gradient(circle at top left, rgba(247,37,133,0.08), transparent 65%);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 16px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
   }
-  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); margin-bottom: 6px; }
-  .stat-value { font-size: 22px; font-weight: 700; }
+  .stat-card:hover { border-color: rgba(247,37,133,0.35); transform: translateY(-1px); }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 6px; }
+  .stat-value { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
   table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-  th, td { text-align: left; padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
-  th { color: var(--text-tertiary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
+  th, td { text-align: left; padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-tertiary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; font-weight: 600; }
   tr:last-child td { border-bottom: none; }
+  tbody tr { transition: background 0.12s ease; }
+  tbody tr:hover { background: var(--surface-elevated); }
 
   .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
   .pill-pending { background: rgba(255,193,7,0.15); color: var(--warning); }
@@ -146,21 +178,27 @@
     margin-right: 6px;
   }
   .btn-approve { background: var(--online); color: #04150e; }
+  .btn-approve:hover { opacity: 0.88; }
   .btn-reject { background: var(--danger); color: white; }
+  .btn-reject:hover { opacity: 0.88; }
   .btn-neutral { background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border); }
 
   .tab-bar { display: flex; gap: 8px; margin-bottom: 16px; }
-  .tab-btn { padding: 6px 14px; border-radius: 999px; background: var(--surface-elevated); color: var(--text-secondary); font-size: 13px; }
+  .tab-btn { padding: 6px 14px; border-radius: 999px; background: var(--surface-elevated); color: var(--text-secondary); font-size: 13px; transition: background 0.15s ease, color 0.15s ease; }
+  .tab-btn:hover { color: var(--text-primary); }
   .tab-btn.active { background: var(--accent); color: white; }
 
   .doc-links a { margin-right: 10px; font-size: 12px; }
 
-  .loading, .empty { color: var(--text-tertiary); padding: 20px; text-align: center; }
+  .loading, .empty { color: var(--text-tertiary); padding: 32px 20px; text-align: center; font-size: 13px; }
 
   @media (max-width: 720px) {
     #appShell { flex-direction: column; }
-    nav.sidebar { width: 100%; display: flex; align-items: center; gap: 8px; padding: 12px; overflow-x: auto; }
+    nav.sidebar { width: 100%; flex-direction: row; align-items: center; gap: 8px; padding: 12px; overflow-x: auto; }
     .sidebar-logo { padding: 0 10px 0 0; }
+    .nav-item { border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; }
+    .nav-item.active { border-left-color: transparent; border-bottom-color: var(--accent); }
+    #logoutBtn { margin-top: 0 !important; }
     main { padding: 16px; }
     table { display: block; overflow-x: auto; }
   }
@@ -181,12 +219,30 @@
 <div id="appShell" class="hidden">
   <nav class="sidebar">
     <div class="sidebar-logo">dosho</div>
-    <button class="nav-item active" data-view="overview">Overview</button>
-    <button class="nav-item" data-view="users">Users</button>
-    <button class="nav-item" data-view="verifications">Verifications</button>
-    <button class="nav-item" data-view="payouts">Payouts</button>
-    <button class="nav-item" data-view="transactions">Transactions</button>
-    <button class="nav-item" id="logoutBtn" style="margin-top: 20px; color: var(--text-tertiary);">Log out</button>
+    <button class="nav-item active" data-view="overview">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Overview
+    </button>
+    <button class="nav-item" data-view="users">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </button>
+    <button class="nav-item" data-view="verifications">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      Verifications
+    </button>
+    <button class="nav-item" data-view="payouts">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 6v12M18 6v12"/></svg>
+      Payouts
+    </button>
+    <button class="nav-item" data-view="transactions">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
+      Transactions
+    </button>
+    <button class="nav-item" id="logoutBtn" style="margin-top: auto; color: var(--text-tertiary);">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Log out
+    </button>
   </nav>
   <main>
     <div id="view-overview"></div>
