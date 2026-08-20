@@ -65,13 +65,11 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.35);
   }
   .login-logo {
-    font-size: 28px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    height: 44px;
+    width: auto;
+    display: block;
     margin-bottom: 4px;
+    filter: drop-shadow(0 4px 16px rgba(247,37,133,0.35));
   }
   .login-sub { color: var(--text-secondary); font-size: 13px; margin-bottom: 24px; }
   input[type="password"], input[type="text"], input[type="number"] {
@@ -116,12 +114,9 @@
     flex-direction: column;
   }
   .sidebar-logo {
-    font-weight: 800;
-    font-size: 20px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    height: 28px;
+    width: auto;
+    display: block;
     padding: 0 10px 20px;
   }
   .nav-item {
@@ -208,7 +203,7 @@
 
 <div id="loginScreen">
   <div class="login-card">
-    <div class="login-logo">dosho</div>
+    <img class="login-logo" src="logo.png" alt="Dosho" />
     <div class="login-sub">Admin dashboard</div>
     <input type="password" id="passwordInput" placeholder="Admin password" />
     <div class="error-text hidden" id="loginError"></div>
@@ -218,7 +213,7 @@
 
 <div id="appShell" class="hidden">
   <nav class="sidebar">
-    <div class="sidebar-logo">dosho</div>
+    <img class="sidebar-logo" src="logo.png" alt="Dosho" />
     <button class="nav-item active" data-view="overview">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
       Overview
