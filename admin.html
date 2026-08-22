@@ -250,6 +250,10 @@
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
       Transactions
     </button>
+    <button class="nav-item" data-view="rooms">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+      Rooms
+    </button>
     <button class="nav-item" id="logoutBtn" style="margin-top: auto; color: var(--text-tertiary);">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       Log out
@@ -261,6 +265,7 @@
     <div id="view-verifications" class="hidden"></div>
     <div id="view-payouts" class="hidden"></div>
     <div id="view-transactions" class="hidden"></div>
+    <div id="view-rooms" class="hidden"></div>
   </main>
 </div>
 
@@ -359,6 +364,7 @@ function loadView(view) {
   if (view === "verifications") loadVerifications("pending");
   if (view === "payouts") loadPayouts("pending");
   if (view === "transactions") loadTransactions();
+  if (view === "rooms") loadRooms("live");
 }
 
 // ---- Overview ----
@@ -539,6 +545,42 @@ async function loadTransactions() {
   }
 }
 
+// ---- Rooms ----
+async function loadRooms(status) {
+  const el = document.getElementById("view-rooms");
+  el.innerHTML = renderTabs("rooms", ["live", "ended", "all"], status) + `<div class="loading">Loading...</div>`;
+  try {
+    const items = await api("/admin/rooms?status=" + status);
+    const tableHtml = !items.length ? `<div class="empty">No ${status} rooms.</div>` : `<table>
+      <thead><tr><th>Host</th><th>Title</th><th>Rate</th><th>Live / Cap</th><th>Speakers</th><th>Revenue</th><th>Started</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>${items.map(r => `
+        <tr>
+          <td>${r.hostEmail}</td>
+          <td>${r.title}</td>
+          <td>${r.ratePerMinute}/min</td>
+          <td>${r.activeParticipants} / ${r.capacity}</td>
+          <td>${r.speakerCount}</td>
+          <td>${r.revenue.toLocaleString()} coins</td>
+          <td>${fmtDate(r.startedAt)}</td>
+          <td>${r.status === "live" ? pillHtml("approved") : `<span class="pill" style="background:var(--surface-elevated);color:var(--text-tertiary);">${r.endReason || "ended"}</span>`}</td>
+          <td>${r.status === "live" ? `<button class="btn-sm btn-reject" onclick="terminateRoom('${r.id}')">Terminate</button>` : "—"}</td>
+        </tr>
+      `).join("")}</tbody>
+    </table>`;
+    el.innerHTML = renderTabs("rooms", ["live", "ended", "all"], status) + tableHtml;
+  } catch (err) {
+    el.innerHTML = renderTabs("rooms", ["live", "ended", "all"], status) + `<div class="error-text">${err.message}</div>`;
+  }
+}
+
+window.terminateRoom = async function (id) {
+  if (!confirm("End this room for everyone right now?")) return;
+  try {
+    await api(`/admin/rooms/${id}/terminate`, { method: "POST" });
+    loadRooms(document.querySelector('#view-rooms .tab-btn.active')?.dataset.tab || "live");
+  } catch (err) { alert(err.message); }
+};
+
 // ---- Shared tab bar ----
 function renderTabs(view, statuses, active) {
   const title = view.charAt(0).toUpperCase() + view.slice(1);
@@ -548,6 +590,7 @@ function renderTabs(view, statuses, active) {
 }
 window.loadVerifications = loadVerifications;
 window.loadPayouts = loadPayouts;
+window.loadRooms = loadRooms;
 
 // ---- Init ----
 if (getToken()) {
