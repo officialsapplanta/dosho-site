@@ -254,6 +254,10 @@
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
       Rooms
     </button>
+    <button class="nav-item" data-view="reports">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Reports
+    </button>
     <button class="nav-item" id="logoutBtn" style="margin-top: auto; color: var(--text-tertiary);">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       Log out
@@ -266,6 +270,7 @@
     <div id="view-payouts" class="hidden"></div>
     <div id="view-transactions" class="hidden"></div>
     <div id="view-rooms" class="hidden"></div>
+    <div id="view-reports" class="hidden"></div>
   </main>
 </div>
 
@@ -305,6 +310,33 @@ function fmtDate(iso) {
 function pillHtml(status) {
   const cls = "pill-" + status;
   return `<span class="pill ${cls}">${status}</span>`;
+}
+
+// Advisory-only automated pre-screen signals from services/verificationAnalysis.ts,
+// livenessAnalysis.ts, and decisionEngine.ts -- none of these ever set `status`
+// themselves, they're just flags/a suggestion for the human reviewer here.
+function signalsHtml(v) {
+  const flags = [];
+  const flagPill = (ok, label) => `<span class="pill ${ok === null ? "pill-pending" : ok ? "pill-approved" : "pill-rejected"}" style="margin:2px 4px 2px 0;">${label}</span>`;
+
+  flags.push(
+    v.faceMatchDistance == null
+      ? flagPill(null, "Face: n/a")
+      : flagPill(!v.faceMatchFlagged, `Face Δ${v.faceMatchDistance.toFixed(2)}`)
+  );
+  flags.push(v.ocrNameMatches == null ? flagPill(null, "OCR: n/a") : flagPill(v.ocrNameMatches, v.ocrNameMatches ? "Name matches ID" : "Name not on ID"));
+  flags.push(v.livenessPassed == null ? flagPill(null, "Liveness: n/a") : flagPill(v.livenessPassed, v.livenessPassed ? "Liveness OK" : "Liveness failed"));
+  if (v.duplicateOfUserId) {
+    flags.push(flagPill(false, `Dup of ${v.duplicateOfUsername ? "@" + v.duplicateOfUsername : v.duplicateOfEmail || v.duplicateOfUserId}`));
+  }
+  if (v.gpsCountryMatches === false) flags.push(flagPill(false, "GPS mismatch"));
+
+  const outcomeCls = { auto_approve: "pill-approved", manual_review: "pill-pending", reject: "pill-rejected" }[v.decisionOutcome] || "pill-pending";
+  const suggestion = v.decisionOutcome
+    ? `<div style="margin-top:4px"><span class="pill ${outcomeCls}">Suggested: ${v.decisionOutcome.replace("_", " ")} (${Math.round((v.decisionScore ?? 0) * 100)}%)</span></div>`
+    : "";
+
+  return flags.join("") + suggestion;
 }
 
 function showLogin() {
@@ -365,6 +397,7 @@ function loadView(view) {
   if (view === "payouts") loadPayouts("pending");
   if (view === "transactions") loadTransactions();
   if (view === "rooms") loadRooms("live");
+  if (view === "reports") loadReports("pending");
 }
 
 // ---- Overview ----
@@ -390,10 +423,63 @@ async function loadOverview() {
         <div class="stat-card"><div class="stat-label">Matched Today</div><div class="stat-value">${data.match.successfulMatchesToday}</div></div>
         <div class="stat-card"><div class="stat-label">Match Coins Earned</div><div class="stat-value">${data.match.totalMatchCallCoins.toLocaleString()}</div></div>
       </div>
+      <h1 style="font-size:16px;margin-top:8px;">Demo creator photos</h1>
+      <p style="color:var(--text-tertiary);font-size:13px;margin-bottom:12px;">Sets Amara/Naomi/Zuri's profile photo + country (for the flag). Run POST /admin/seed first if these accounts don't exist yet.</p>
+      <div id="demo-photo-rows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;">
+        ${["amara", "naomi", "zuri"].map(id => `
+          <div style="display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;">
+            <span style="width:70px;flex-shrink:0;">${id[0].toUpperCase() + id.slice(1)}</span>
+            <input type="file" id="photo-${id}" accept="image/*" style="flex:1;margin:0;" />
+            <input type="text" id="country-${id}" value="KE" maxlength="2" style="width:56px;text-transform:uppercase;margin:0;" title="2-letter country code" />
+          </div>
+        `).join("")}
+      </div>
+      <button class="btn-sm btn-approve" id="upload-demo-photos" style="padding:8px 16px;">Upload demo photos</button>
+      <p id="demo-photos-result" style="color:var(--text-tertiary);font-size:13px;margin-top:10px;"></p>
     `;
+    document.getElementById("upload-demo-photos").addEventListener("click", uploadDemoPhotos);
   } catch (err) {
     el.innerHTML = `<h1>Overview</h1><div class="error-text">${err.message}</div>`;
   }
+}
+
+async function uploadDemoPhotos() {
+  const btn = document.getElementById("upload-demo-photos");
+  const resultEl = document.getElementById("demo-photos-result");
+  btn.disabled = true;
+  resultEl.textContent = "Uploading…";
+  const ids = ["amara", "naomi", "zuri"];
+  const summaries = [];
+  let anyPicked = false;
+  // One request per photo rather than batched -- these are user-picked
+  // local images of unknown size, and batching all 3 into one JSON body
+  // risks tripping the backend's 10mb request limit.
+  for (const id of ids) {
+    const fileInput = document.getElementById(`photo-${id}`);
+    const file = fileInput.files[0];
+    if (!file) continue;
+    anyPicked = true;
+    const email = `${id}.demo@dosho.app`;
+    try {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      const country = document.getElementById(`country-${id}`).value || "KE";
+      const result = await api("/admin/demo-photos", {
+        method: "POST",
+        body: JSON.stringify({ photos: [{ email, photoDataUrl: dataUrl, country }] }),
+      });
+      const r = result.results[0];
+      summaries.push(`${email}: ${r.ok ? "done" : r.error}`);
+    } catch (err) {
+      summaries.push(`${email}: ${err.message}`);
+    }
+  }
+  resultEl.textContent = anyPicked ? summaries.join(" · ") : "Pick at least one photo first.";
+  btn.disabled = false;
 }
 
 // ---- Users ----
@@ -420,16 +506,17 @@ async function loadVerifications(status) {
     const items = await api("/admin/verifications?status=" + status);
     const body = el.querySelector(".loading")?.parentElement || el;
     const tableHtml = !items.length ? `<div class="empty">No ${status} verifications.</div>` : `<table>
-      <thead><tr><th>User</th><th>Legal Name</th><th>ID Type</th><th>Photos</th><th>Submitted</th><th>Actions</th></tr></thead>
+      <thead><tr><th>User</th><th>Legal Name</th><th>ID Type</th><th>Photos</th><th>Automated signals</th><th>Submitted</th><th>Actions</th></tr></thead>
       <tbody>${items.map(v => `
         <tr>
-          <td>${v.email}</td>
+          <td>${v.email}${v.username ? `<br><span style="color:var(--text-tertiary)">@${v.username}</span>` : ""}</td>
           <td>${v.legalFullName || "—"}</td>
           <td>${v.idType || "—"}</td>
           <td class="doc-links">
             ${v.idPhotoUrl ? `<a href="#" onclick="viewPrivateImage('${v.idPhotoUrl}'); return false;">ID</a>` : ""}
             ${v.selfieUrl ? `<a href="#" onclick="viewPrivateImage('${v.selfieUrl}'); return false;">Selfie</a>` : ""}
           </td>
+          <td style="max-width:220px">${signalsHtml(v)}</td>
           <td>${fmtDate(v.submittedAt)}</td>
           <td>
             ${v.status === "pending" ? `
@@ -580,6 +667,45 @@ window.terminateRoom = async function (id) {
     loadRooms(document.querySelector('#view-rooms .tab-btn.active')?.dataset.tab || "live");
   } catch (err) { alert(err.message); }
 };
+
+// ---- Reports ----
+async function loadReports(status) {
+  const el = document.getElementById("view-reports");
+  el.innerHTML = renderTabs("reports", ["pending", "reviewed", "actioned"], status) + `<div class="loading">Loading...</div>`;
+  try {
+    const items = await api("/admin/reports?status=" + status);
+    const tableHtml = !items.length ? `<div class="empty">No ${status} reports.</div>` : `<table>
+      <thead><tr><th>Reporter</th><th>Reported user</th><th>Reason</th><th>Details</th><th>Filed</th><th>Actions</th></tr></thead>
+      <tbody>${items.map(r => `
+        <tr>
+          <td>${r.reporterEmail}</td>
+          <td>${r.reportedEmail}${!r.reportedUserActive ? ` <span class="pill pill-rejected">Suspended</span>` : ""}</td>
+          <td>${r.reason}</td>
+          <td>${r.details || "—"}</td>
+          <td>${fmtDate(r.createdAt)}</td>
+          <td>
+            ${r.status === "pending" ? `
+              <button class="btn-sm btn-neutral" onclick="reviewReport('${r.id}', false)">Mark reviewed</button>
+              <button class="btn-sm btn-reject" onclick="reviewReport('${r.id}', true)">Deactivate user</button>
+            ` : pillHtml(r.status)}
+          </td>
+        </tr>
+      `).join("")}</tbody>
+    </table>`;
+    el.innerHTML = renderTabs("reports", ["pending", "reviewed", "actioned"], status) + tableHtml;
+  } catch (err) {
+    el.innerHTML = renderTabs("reports", ["pending", "reviewed", "actioned"], status) + `<div class="error-text">${err.message}</div>`;
+  }
+}
+
+window.reviewReport = async function (id, deactivateUser) {
+  if (deactivateUser && !confirm("Deactivate this user's account?")) return;
+  try {
+    await api(`/admin/reports/${id}/review`, { method: "POST", body: JSON.stringify({ deactivateUser }) });
+    loadReports(document.querySelector('#view-reports .tab-btn.active')?.dataset.tab || "pending");
+  } catch (err) { alert(err.message); }
+};
+window.loadReports = loadReports;
 
 // ---- Shared tab bar ----
 function renderTabs(view, statuses, active) {
