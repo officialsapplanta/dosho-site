@@ -478,8 +478,29 @@ async function uploadDemoPhotos() {
       summaries.push(`${email}: ${err.message}`);
     }
   }
-  resultEl.textContent = anyPicked ? summaries.join(" · ") : "Pick at least one photo first.";
+  if (!anyPicked) {
+    resultEl.textContent = "Pick at least one photo first.";
+    btn.disabled = false;
+    return;
+  }
+
+  const allOk = summaries.every((s) => s.endsWith(": done"));
+  resultEl.textContent = allOk ? "Done ✓" : summaries.join(" · ");
   btn.disabled = false;
+
+  // Reset back to the empty form a couple seconds after a clean success --
+  // an error stays on screen so it can actually be read/acted on.
+  if (allOk) {
+    setTimeout(() => {
+      ids.forEach((id) => {
+        const fileInput = document.getElementById(`photo-${id}`);
+        if (fileInput) fileInput.value = "";
+        const countryInput = document.getElementById(`country-${id}`);
+        if (countryInput) countryInput.value = "KE";
+      });
+      resultEl.textContent = "";
+    }, 2000);
+  }
 }
 
 // ---- Users ----
