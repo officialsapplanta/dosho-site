@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dosho Child Safety Standards</title>
+<style>
+  :root {
+    --bg: #FBF8FA;
+    --surface: #FFFFFF;
+    --surface-sunken: #F5EEF2;
+    --text: #1C1120;
+    --text-muted: #6B5568;
+    --accent: #C81E6F;
+    --accent-2: #8B1774;
+    --border: rgba(200, 30, 111, 0.16);
+    --border-strong: rgba(200, 30, 111, 0.32);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A0710;
+      --surface: #140F1C;
+      --surface-sunken: #1B1424;
+      --text: #F1E9F0;
+      --text-muted: #A793A8;
+      --accent: #F72585;
+      --accent-2: #FF6FB0;
+      --border: rgba(247, 37, 133, 0.2);
+      --border-strong: rgba(247, 37, 133, 0.38);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0A0710;
+    --surface: #140F1C;
+    --surface-sunken: #1B1424;
+    --text: #F1E9F0;
+    --text-muted: #A793A8;
+    --accent: #F72585;
+    --accent-2: #FF6FB0;
+    --border: rgba(247, 37, 133, 0.2);
+    --border-strong: rgba(247, 37, 133, 0.38);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .masthead {
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 1.5rem;
+  }
+  .masthead-inner {
+    max-width: 42rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .wordmark-logo { height: 2.75rem; width: auto; display: block; border-radius: 8px; }
+  .doc-meta {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  main { max-width: 42rem; margin: 0 auto; padding: 2.75rem 1.5rem 6rem; }
+
+  h1 {
+    font-family: Georgia, "Iowan Old Style", ui-serif, serif;
+    font-size: clamp(1.9rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    text-wrap: balance;
+    margin: 0 0 0.5rem;
+  }
+  .lede {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 40ch;
+    margin: 0 0 2.75rem;
+  }
+
+  nav.toc {
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+  nav.toc p {
+    margin: 0 0 0.75rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  nav.toc ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+  nav.toc li { break-inside: avoid; margin-bottom: 0.5rem; }
+  nav.toc a { text-decoration: none; font-size: 0.92rem; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  section {
+    padding-top: 2.5rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 1.5rem;
+  }
+  section:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+  h2 {
+    font-family: Georgia, "Iowan Old Style", ui-serif, serif;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0 0 1rem;
+  }
+  h2 .num {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  p { margin: 0 0 1rem; max-width: 62ch; }
+  ul { margin: 0 0 1rem; padding-left: 1.25rem; max-width: 60ch; }
+  li { margin-bottom: 0.4rem; }
+
+  .callout {
+    background: var(--surface-sunken);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    font-size: 0.94rem;
+  }
+  .callout strong { color: var(--accent-2); }
+
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .contact-card a { font-weight: 600; text-decoration: none; }
+  .contact-card a:hover { text-decoration: underline; }
+
+  footer {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <img class="wordmark-logo" src="logo.png" alt="Dosho">
+    <p class="doc-meta">Child Safety Standards · Effective 30 Aug 2026</p>
+  </div>
+</header>
+
+<main>
+  <h1>Child Safety Standards</h1>
+  <p class="lede">Dosho's published standards against child sexual abuse and exploitation (CSAE), as required for apps in the social/dating category.</p>
+
+  <nav class="toc" aria-label="Table of contents">
+    <p>On this page</p>
+    <ol>
+      <li><a href="#policy">1. Our policy</a></li>
+      <li><a href="#prevention">2. Prevention</a></li>
+      <li><a href="#detection">3. Detection &amp; reporting</a></li>
+      <li><a href="#response">4. Our response</a></li>
+      <li><a href="#contact">5. Contact</a></li>
+    </ol>
+  </nav>
+
+  <section id="policy">
+    <h2><span class="num">01</span> Our policy</h2>
+    <p>Dosho has zero tolerance for child sexual abuse and exploitation (CSAE) in any form. This applies to every part of the platform — profiles, messages, calls, and Rooms — with no exceptions.</p>
+    <div class="callout">
+      <strong>Dosho is restricted to users 18 and older.</strong> Content involving, sexualizing, or endangering minors is never permitted, and any account found to violate this is terminated immediately and permanently.
+    </div>
+    <p>This standard is also published in our <a href="community-guidelines.html">Community Guidelines</a> (§1, Zero-tolerance content) and <a href="privacy.html">Privacy Policy</a>.</p>
+  </section>
+
+  <section id="prevention">
+    <h2><span class="num">02</span> Prevention</h2>
+    <p>Dosho takes the following steps before and during account use to keep minors off the platform:</p>
+    <ul>
+      <li><strong>Age gate at signup.</strong> Every account must confirm a date of birth establishing they are 18 or older before an account can be created.</li>
+      <li><strong>Identity verification.</strong> Creators go through a document- and liveness-based identity verification process (government ID capture, face match, and a guided liveness check) before their profile can go live, reducing the risk of falsified ages or impersonation.</li>
+      <li><strong>No open discovery of minors.</strong> Profiles and matches are only surfaced between verified adult accounts.</li>
+    </ul>
+  </section>
+
+  <section id="detection">
+    <h2><span class="num">03</span> Detection &amp; reporting</h2>
+    <p>Every profile, message, and call includes an in-app way to report or block instantly. Reports involving suspected CSAE are treated as the highest priority and escalated immediately, ahead of Dosho's standard moderation queue.</p>
+    <p>Anyone — a user, a parent, or a member of the public — can report a concern about child safety on Dosho by emailing the contact below, without needing an account.</p>
+  </section>
+
+  <section id="response">
+    <h2><span class="num">04</span> Our response</h2>
+    <p>When a report or internal review confirms a CSAE violation, Dosho:</p>
+    <ul>
+      <li>Removes the offending content immediately.</li>
+      <li>Permanently terminates the account, with no refund of any remaining coin balance.</li>
+      <li>Preserves relevant account and content data as evidence.</li>
+      <li>Reports the incident to the National Center for Missing &amp; Exploited Children (NCMEC) and/or law enforcement as required by applicable law.</li>
+    </ul>
+    <p>This mirrors the enforcement standard published in our <a href="community-guidelines.html#enforcement">Community Guidelines</a> (§5).</p>
+  </section>
+
+  <section id="contact">
+    <h2><span class="num">05</span> Contact</h2>
+    <div class="contact-card">
+      <p>Dosho's designated point of contact for child safety standards and CSAE prevention/compliance is:</p>
+      <p><a href="mailto:sapplantabusiness@gmail.com">sapplantabusiness@gmail.com</a></p>
+      <p>This inbox is monitored and reports are treated as urgent.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Dosho is operated by Sapplanta. This page is kept current as our child safety practices evolve.</p>
+</footer>
+
+</body>
+</html>
