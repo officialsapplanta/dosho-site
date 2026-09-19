@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dosho Creator</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --background: #07070d;
+    --surface: #12121e;
+    --surface-elevated: #181826;
+    --border: rgba(255,255,255,0.08);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255,255,255,0.65);
+    --text-tertiary: rgba(255,255,255,0.4);
+    --accent: #f72585;
+    --accent-secondary: #b5179e;
+    --online: #34d399;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--background);
+    color: var(--text-primary);
+    font-family: 'Manrope', -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .photo-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--surface-elevated);
+  }
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7,7,13,0.85) 0%, rgba(7,7,13,0) 45%);
+  }
+  .online-pill {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(7,7,13,0.6);
+    backdrop-filter: blur(6px);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--online);
+  }
+  .online-pill::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--online);
+  }
+  .body {
+    padding: 20px 20px 24px;
+  }
+  .name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .name {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .username {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+  }
+  .bio {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .rate-row {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+  .rate-row .label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .rate-row .value {
+    margin-left: auto;
+    font-size: 15px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .cta {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .footnote {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+  .skeleton { opacity: 0.5; }
+  .error-card {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="error-card" id="loading">Loading profile…</div>
+  </div>
+
+  <script>
+    const API_BASE = "https://dosho-api-production.up.railway.app";
+    const params = new URLSearchParams(location.search);
+    const username = params.get("u");
+    const card = document.getElementById("card");
+    const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=app.dosho.android";
+
+    function escapeHtml(s) {
+      const div = document.createElement("div");
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    function render(profile) {
+      card.innerHTML = `
+        <div class="photo-wrap">
+          ${profile.photoUrl ? `<img src="${profile.photoUrl}" alt="${escapeHtml(profile.displayName)}" />` : ""}
+          <div class="photo-gradient"></div>
+          <div class="online-pill">Online now</div>
+        </div>
+        <div class="body">
+          <div class="name-row">
+            <p class="name">${escapeHtml(profile.displayName)}</p>
+            ${profile.username ? `<span class="username">@${escapeHtml(profile.username)}</span>` : ""}
+          </div>
+          ${profile.bio ? `<p class="bio">${escapeHtml(profile.bio)}</p>` : ""}
+          <div class="rate-row">
+            <span class="label">Video call rate</span>
+            <span class="value">${profile.videoRatePerMinute} coins/min</span>
+          </div>
+          <a class="cta" href="${PLAY_STORE_URL}">Get Dosho to Connect</a>
+          <p class="footnote">Live video chat, real people</p>
+        </div>
+      `;
+    }
+
+    function renderError() {
+      card.innerHTML = `
+        <div class="error-card">
+          <p style="font-size:16px;font-weight:600;color:#fff;margin:0 0 8px;">Profile not found</p>
+          <p style="margin:0 0 20px;">This creator isn't available right now.</p>
+          <a class="cta" href="${PLAY_STORE_URL}">Get Dosho</a>
+        </div>
+      `;
+    }
+
+    if (!username) {
+      renderError();
+    } else {
+      fetch(`${API_BASE}/discovery/public/creator/${encodeURIComponent(username)}`)
+        .then((res) => { if (!res.ok) throw new Error("not found"); return res.json(); })
+        .then(render)
+        .catch(renderError);
+    }
+  </script>
+</body>
+</html>
