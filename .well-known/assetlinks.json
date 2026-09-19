@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.dosho.android",
+      "sha256_cert_fingerprints":
+        ["04:E0:1E:10:F4:CC:63:0A:AE:F3:FE:74:AC:06:9D:50:C3:85:36:BE:88:72:D2:49:76:06:AA:3F:0A:16:29:A7"]
+    }
+  }
+]
