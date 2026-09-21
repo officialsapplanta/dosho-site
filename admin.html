@@ -246,6 +246,10 @@
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 6v12M18 6v12"/></svg>
       Payouts
     </button>
+    <button class="nav-item" data-view="affiliate-payouts">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Affiliate Payouts
+    </button>
     <button class="nav-item" data-view="transactions">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
       Transactions
@@ -268,6 +272,7 @@
     <div id="view-users" class="hidden"></div>
     <div id="view-verifications" class="hidden"></div>
     <div id="view-payouts" class="hidden"></div>
+    <div id="view-affiliate-payouts" class="hidden"></div>
     <div id="view-transactions" class="hidden"></div>
     <div id="view-rooms" class="hidden"></div>
     <div id="view-reports" class="hidden"></div>
@@ -395,6 +400,7 @@ function loadView(view) {
   if (view === "users") loadUsers();
   if (view === "verifications") loadVerifications("pending");
   if (view === "payouts") loadPayouts("pending");
+  if (view === "affiliate-payouts") loadAffiliatePayouts("pending");
   if (view === "transactions") loadTransactions();
   if (view === "rooms") loadRooms("live");
   if (view === "reports") loadReports("pending");
@@ -413,6 +419,7 @@ async function loadOverview() {
         <div class="stat-card"><div class="stat-label">Active Creators</div><div class="stat-value">${data.activeCreators}</div></div>
         <div class="stat-card"><div class="stat-label">Pending Verifications</div><div class="stat-value">${data.pendingVerifications}</div></div>
         <div class="stat-card"><div class="stat-label">Pending Payouts</div><div class="stat-value">${data.pendingPayouts}</div></div>
+        <div class="stat-card"><div class="stat-label">Pending Affiliate Payouts</div><div class="stat-value">${data.pendingAffiliatePayouts}</div></div>
         <div class="stat-card"><div class="stat-label">Platform Revenue</div><div class="stat-value">KES ${data.platformRevenueKes.toLocaleString()}</div></div>
       </div>
       <h1 style="font-size:16px;margin-top:8px;">Match</h1>
@@ -666,6 +673,51 @@ window.rejectPayout = async function (id) {
   try {
     await api(`/admin/payouts/${id}/reject`, { method: "POST", body: JSON.stringify({ reason }) });
     loadPayouts(document.querySelector('#view-payouts .tab-btn.active')?.dataset.tab || "pending");
+  } catch (err) { alert(err.message); }
+};
+
+// ---- Affiliate Payouts ----
+async function loadAffiliatePayouts(status) {
+  const el = document.getElementById("view-affiliate-payouts");
+  el.innerHTML = renderTabs("affiliate-payouts", ["pending", "paid", "rejected"], status) + `<div class="loading">Loading...</div>`;
+  try {
+    const items = await api("/admin/affiliate-payouts?status=" + status);
+    const tableHtml = !items.length ? `<div class="empty">No ${status} affiliate payouts.</div>` : `<table>
+      <thead><tr><th>Affiliate</th><th>Amount</th><th>Method</th><th>Account</th><th>Requested</th><th>Actions</th></tr></thead>
+      <tbody>${items.map(p => `
+        <tr>
+          <td>${p.email}</td>
+          <td>KES ${p.amountKes}</td>
+          <td>${p.method}</td>
+          <td>${p.accountNumber}</td>
+          <td>${fmtDate(p.requestedAt)}</td>
+          <td>
+            ${p.status === "pending" ? `
+              <button class="btn-sm btn-approve" onclick="markAffiliatePaid('${p.id}')">Mark Paid</button>
+              <button class="btn-sm btn-reject" onclick="rejectAffiliatePayout('${p.id}')">Reject</button>
+            ` : pillHtml(p.status)}
+          </td>
+        </tr>
+      `).join("")}</tbody>
+    </table>`;
+    el.innerHTML = renderTabs("affiliate-payouts", ["pending", "paid", "rejected"], status) + tableHtml;
+  } catch (err) {
+    el.innerHTML = renderTabs("affiliate-payouts", ["pending", "paid", "rejected"], status) + `<div class="error-text">${err.message}</div>`;
+  }
+}
+
+window.markAffiliatePaid = async function (id) {
+  try {
+    await api(`/admin/affiliate-payouts/${id}/mark-paid`, { method: "POST" });
+    loadAffiliatePayouts(document.querySelector('#view-affiliate-payouts .tab-btn.active')?.dataset.tab || "pending");
+  } catch (err) { alert(err.message); }
+};
+
+window.rejectAffiliatePayout = async function (id) {
+  const reason = prompt("Rejection reason (balance will be refunded to the affiliate):") || "Rejected by admin";
+  try {
+    await api(`/admin/affiliate-payouts/${id}/reject`, { method: "POST", body: JSON.stringify({ reason }) });
+    loadAffiliatePayouts(document.querySelector('#view-affiliate-payouts .tab-btn.active')?.dataset.tab || "pending");
   } catch (err) { alert(err.message); }
 };
 
