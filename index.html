@@ -209,6 +209,11 @@
   }
   .carousel::-webkit-scrollbar { height: 6px; }
   .carousel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+  /* On wider screens these three carousels' cards fit without needing to
+     scroll, so center them instead of leaving them stranded on the left. */
+  @media (min-width: 56rem) {
+    .carousel-center { justify-content: center; }
+  }
 
   .step {
     flex: 0 0 auto;
@@ -353,7 +358,7 @@
       <p class="eyebrow">How it works</p>
       <h2>Three parts, one conversation.</h2>
     </div>
-    <div class="carousel">
+    <div class="carousel carousel-center">
       <div class="step">
         <p class="mark">01</p>
         <h3>Discover</h3>
@@ -391,7 +396,7 @@
       <p class="eyebrow">Earn on Dosho</p>
       <h2>Two ways to make money, at once if you want.</h2>
     </div>
-    <div class="carousel">
+    <div class="carousel carousel-center">
       <div class="earn-card">
         <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
         <h3>Go live as a creator</h3>
@@ -412,7 +417,7 @@
       <p class="eyebrow">Trust &amp; safety</p>
       <h2>Built with the boundaries that matter.</h2>
     </div>
-    <div class="carousel">
+    <div class="carousel carousel-center">
       <div class="trust-item">
         <span class="dot" aria-hidden="true"></span>
         <h4>Real identity verification</h4>
