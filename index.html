@@ -150,19 +150,26 @@
   .btn-secondary:hover { color: var(--text); border-color: var(--border-strong); }
 
   .hero-image {
-    display: flex;
-    justify-content: flex-end;
-  }
-  .hero-image img {
+    position: relative;
     width: 100%;
     max-width: 22rem;
-    height: auto;
-    display: block;
+    height: 30rem;
+    margin-left: auto;
+  }
+  .hero-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     border-radius: 1.5rem;
     filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5));
+    opacity: 0;
+    transition: opacity 1s ease;
   }
+  .hero-image img.active { opacity: 1; }
   @media (max-width: 56rem) {
-    .hero-image { justify-content: center; }
+    .hero-image { margin-left: auto; margin-right: auto; }
   }
 
   .status-strip {
@@ -347,8 +354,12 @@
         <a class="btn-secondary" href="#earn">See how you earn</a>
       </div>
     </div>
-    <div class="hero-image">
-      <img src="screenshots/discover.png" alt="Dosho discover feed">
+    <div class="hero-image" id="heroSlideshow">
+      <img src="screenshots/welcome.jpg" alt="Dosho welcome screen" class="active">
+      <img src="screenshots/discover.jpg" alt="Dosho discover feed">
+      <img src="screenshots/creator-profile.jpg" alt="Dosho creator profile">
+      <img src="screenshots/match.jpg" alt="Dosho instant match">
+      <img src="screenshots/buy-coins.jpg" alt="Dosho buy coins">
     </div>
   </section>
 
@@ -388,11 +399,11 @@
       <h2>What you'll actually see.</h2>
     </div>
     <div class="carousel">
-      <div class="showcase-item"><img src="screenshots/welcome.jpeg" alt="Welcome screen"></div>
-      <div class="showcase-item"><img src="screenshots/discover.png" alt="Discover feed"></div>
-      <div class="showcase-item"><img src="screenshots/creator-profile.png" alt="Creator profile"></div>
-      <div class="showcase-item"><img src="screenshots/match.png" alt="Instant match"></div>
-      <div class="showcase-item"><img src="screenshots/buy-coins.png" alt="Buy coins"></div>
+      <div class="showcase-item"><img src="screenshots/welcome.jpg" alt="Welcome screen" loading="lazy"></div>
+      <div class="showcase-item"><img src="screenshots/discover.jpg" alt="Discover feed" loading="lazy"></div>
+      <div class="showcase-item"><img src="screenshots/creator-profile.jpg" alt="Creator profile" loading="lazy"></div>
+      <div class="showcase-item"><img src="screenshots/match.jpg" alt="Instant match" loading="lazy"></div>
+      <div class="showcase-item"><img src="screenshots/buy-coins.jpg" alt="Buy coins" loading="lazy"></div>
     </div>
   </section>
 
@@ -462,6 +473,51 @@
     <a href="mailto:sapplantabusiness@gmail.com">Contact</a>
   </div>
 </footer>
+
+<script>
+// Hero slideshow: cycles the stacked screenshots automatically.
+(function () {
+  var slides = document.querySelectorAll('#heroSlideshow img');
+  if (slides.length < 2) return;
+  var i = 0;
+  setInterval(function () {
+    slides[i].classList.remove('active');
+    i = (i + 1) % slides.length;
+    slides[i].classList.add('active');
+  }, 3200);
+})();
+
+// Every .carousel auto-scrolls sideways, one card at a time, looping back
+// to the start -- pauses while the visitor is actually interacting with it
+// (hover, touch, or manual scroll) so it never fights their own scrolling.
+(function () {
+  document.querySelectorAll('.carousel').forEach(function (track) {
+    var paused = false;
+    var resumeTimer = null;
+    var pauseAwhile = function () {
+      paused = true;
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(function () { paused = false; }, 4000);
+    };
+    track.addEventListener('mouseenter', function () { paused = true; });
+    track.addEventListener('mouseleave', function () { paused = false; });
+    track.addEventListener('touchstart', pauseAwhile, { passive: true });
+    track.addEventListener('wheel', pauseAwhile, { passive: true });
+
+    setInterval(function () {
+      if (paused) return;
+      var card = track.firstElementChild;
+      if (!card) return;
+      var step = card.getBoundingClientRect().width + 20; // width + gap
+      var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      track.scrollTo({
+        left: atEnd ? 0 : track.scrollLeft + step,
+        behavior: 'smooth',
+      });
+    }, 2800);
+  });
+})();
+</script>
 
 </body>
 </html>
