@@ -4,11 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dosho</title>
+<meta name="description" content="Meet new people, video call, or join live rooms. Creators earn per minute, everyone can earn as an affiliate.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dosho.site">
 <meta property="og:title" content="Dosho: Live Video Chat and Earn">
 <meta property="og:description" content="Meet new people, video call, or join live rooms. Creators earn per minute, everyone can earn as an affiliate.">
+<meta property="og:image" content="https://dosho.site/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="583">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dosho: Live Video Chat and Earn">
+<meta name="twitter:description" content="Meet new people, video call, or join live rooms. Creators earn per minute, everyone can earn as an affiliate.">
+<meta name="twitter:image" content="https://dosho.site/og-image.jpg">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="favicon.png">
+<link rel="preload" as="image" href="banner-cutout3.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&display=swap">
 <style>
   :root {
     --bg: #07070E;
@@ -110,9 +124,10 @@
     margin: 0 0 1.25rem;
   }
   h1 {
+    font-family: "Unbounded", -apple-system, "Segoe UI", Roboto, sans-serif;
     font-size: clamp(2.4rem, 6vw, 4.4rem);
-    line-height: 1.03;
-    font-weight: 800;
+    line-height: 1.05;
+    font-weight: 700;
     letter-spacing: -0.02em;
     text-wrap: balance;
     margin: 0 0 1.5rem;
@@ -182,10 +197,11 @@
   section { max-width: 68rem; margin: 0 auto; padding: 5rem 1.5rem; border-top: 1px solid var(--border); }
   .section-head { max-width: 32rem; margin: 0 auto 3rem; text-align: center; }
   .section-head .eyebrow { margin-bottom: 1rem; }
+  h2 { font-family: "Unbounded", -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 700; }
   .section-head h2 {
     font-size: clamp(1.7rem, 3.2vw, 2.3rem);
-    line-height: 1.15;
-    font-weight: 800;
+    line-height: 1.2;
+    font-weight: 700;
     letter-spacing: -0.01em;
     margin: 0;
     text-wrap: balance;
@@ -329,7 +345,7 @@
 
 <main>
   <div class="hero-banner">
-  <div class="hero-figure" aria-hidden="true"><img src="banner-cutout3.webp" alt=""></div>
+  <div class="hero-figure" aria-hidden="true"><img src="banner-cutout3.webp" alt="" fetchpriority="high"></div>
   <section class="hero" style="border-top: none; padding-top: clamp(2rem, 6vw, 4rem);">
     <div>
       <div class="brand"><img src="dosho-logo.png" alt="Dosho"></div>
@@ -355,7 +371,7 @@
   <section id="how">
     <div class="section-head">
       <p class="eyebrow">How it works</p>
-      <h2>Three parts, one conversation.</h2>
+      <h2>Discover, connect, earn.</h2>
     </div>
     <div class="carousel carousel-center">
       <div class="step">
@@ -379,7 +395,7 @@
   <section>
     <div class="section-head">
       <p class="eyebrow">Inside the app</p>
-      <h2>What you'll actually see.</h2>
+      <h2>See the app.</h2>
     </div>
     <div class="carousel">
       <div class="showcase-item"><img src="screenshots/welcome.jpg" alt="Welcome screen" loading="lazy"></div>
@@ -393,7 +409,7 @@
   <section id="earn">
     <div class="section-head">
       <p class="eyebrow">Earn on Dosho</p>
-      <h2>Two ways to make money, at once if you want.</h2>
+      <h2>Two ways to earn.</h2>
     </div>
     <div class="carousel carousel-center">
       <div class="earn-card">
@@ -414,7 +430,7 @@
   <section>
     <div class="section-head">
       <p class="eyebrow">Trust &amp; safety</p>
-      <h2>Built with the boundaries that matter.</h2>
+      <h2>Built on trust.</h2>
     </div>
     <div class="carousel carousel-center">
       <div class="trust-item">
@@ -438,7 +454,7 @@
   <section>
     <div class="cta-final">
       <p class="eyebrow" style="justify-content: center; display: flex;">Ready?</p>
-      <h2>Download Dosho and start today.</h2>
+      <h2>Start today.</h2>
       <p>Free to join, pay only for what you use.</p>
       <a class="btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
         <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2 -60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6 -256L47 0zm425.2 225.6l-58.9 -34.1 -65.7 64.5 65.7 64.5 60.1 -34.1c18 -14.3 18 -46.5 -1.2 -60.8zM104.6 499l280.8 -161.2 -60.1 -60.1L104.6 499z"/></svg> Get it on Google Play
