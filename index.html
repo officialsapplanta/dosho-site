@@ -59,7 +59,7 @@
     align-items: center;
     justify-content: space-between;
   }
-  .brand img { height: 2.1rem; width: auto; display: block; }
+  .brand img { height: 4.5rem; width: auto; display: block; }
   .badge {
     font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.68rem;
@@ -197,31 +197,58 @@
     text-wrap: balance;
   }
 
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.25rem; }
-  .step { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; }
-  .step .mark { font-size: 1.6rem; color: var(--accent); margin: 0 0 1rem; font-weight: 800; }
-  .step h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
-  .step p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin: 0; max-width: 32ch; }
-
-  .showcase-scroll {
+  /* Shared horizontal-scroll carousel -- every section with multiple
+     cards/images uses this instead of a grid, so the whole page has one
+     consistent "swipe sideways" interaction rather than rows that wrap. */
+  .carousel {
     display: flex;
     gap: 1.25rem;
     overflow-x: auto;
     padding: 0.5rem 0 1rem;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    /* Fades the trailing edge so a partially-visible next card reads as
+       "swipe for more" rather than a cut-off image. */
+    mask-image: linear-gradient(to right, black calc(100% - 3rem), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 3rem), transparent 100%);
   }
-  .showcase-scroll::-webkit-scrollbar { height: 6px; }
-  .showcase-scroll::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
-  .showcase-item {
+  .carousel::-webkit-scrollbar { height: 6px; }
+  .carousel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+
+  .step {
     flex: 0 0 auto;
     width: 16rem;
     scroll-snap-align: start;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
   }
-  .showcase-item img { border-radius: 1rem; }
+  .step .mark { font-size: 1.6rem; color: var(--accent); margin: 0 0 1rem; font-weight: 800; }
+  .step h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
+  .step p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin: 0; }
 
-  .earn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem; }
+  .showcase-item {
+    flex: 0 0 auto;
+    width: 16rem;
+    height: 28rem;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .showcase-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 1rem;
+  }
+
   .earn-card {
+    flex: 0 0 auto;
+    width: 18rem;
+    scroll-snap-align: start;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -246,10 +273,17 @@
     padding: 0.7rem 0.9rem;
   }
 
-  .trust-list { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
-  .trust-item { display: flex; gap: 1rem; }
-  .trust-item .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--gradient); margin-top: 0.5rem; flex-shrink: 0; }
-  .trust-item h4 { margin: 0 0 0.3rem; font-size: 1rem; }
+  .trust-item {
+    flex: 0 0 auto;
+    width: 16rem;
+    scroll-snap-align: start;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+  }
+  .trust-item .dot { display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--gradient); margin-bottom: 0.75rem; }
+  .trust-item h4 { margin: 0 0 0.4rem; font-size: 1rem; }
   .trust-item p { margin: 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
 
   .cta-final {
@@ -328,7 +362,7 @@
       <p class="eyebrow">How it works</p>
       <h2>Three parts, one conversation.</h2>
     </div>
-    <div class="steps">
+    <div class="carousel">
       <div class="step">
         <p class="mark">01</p>
         <h3>Discover</h3>
@@ -352,7 +386,7 @@
       <p class="eyebrow">Inside the app</p>
       <h2>What you'll actually see.</h2>
     </div>
-    <div class="showcase-scroll">
+    <div class="carousel">
       <div class="showcase-item"><img src="screenshots/welcome.jpeg" alt="Welcome screen"></div>
       <div class="showcase-item"><img src="screenshots/discover.png" alt="Discover feed"></div>
       <div class="showcase-item"><img src="screenshots/creator-profile.png" alt="Creator profile"></div>
@@ -366,7 +400,7 @@
       <p class="eyebrow">Earn on Dosho</p>
       <h2>Two ways to make money, at once if you want.</h2>
     </div>
-    <div class="earn-grid">
+    <div class="carousel">
       <div class="earn-card">
         <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
         <h3>Go live as a creator</h3>
@@ -387,18 +421,21 @@
       <p class="eyebrow">Trust &amp; safety</p>
       <h2>Built with the boundaries that matter.</h2>
     </div>
-    <div class="trust-list">
+    <div class="carousel">
       <div class="trust-item">
         <span class="dot" aria-hidden="true"></span>
-        <div><h4>Real identity verification</h4><p>Every creator confirms their age and identity with a government ID and live selfie before they can go live.</p></div>
+        <h4>Real identity verification</h4>
+        <p>Every creator confirms their age and identity with a government ID and live selfie before they can go live.</p>
       </div>
       <div class="trust-item">
         <span class="dot" aria-hidden="true"></span>
-        <div><h4>Server-side wallet</h4><p>Coin balances and charges are calculated on our servers, not your device, so a balance can't be spoofed or double-spent.</p></div>
+        <h4>Server-side wallet</h4>
+        <p>Coin balances and charges are calculated on our servers, not your device, so a balance can't be spoofed or double-spent.</p>
       </div>
       <div class="trust-item">
         <span class="dot" aria-hidden="true"></span>
-        <div><h4>Age-verified accounts</h4><p>Every account confirms it meets our 18+ age requirement at sign-up and at creator verification.</p></div>
+        <h4>Age-verified accounts</h4>
+        <p>Every account confirms it meets our 18+ age requirement at sign-up and at creator verification.</p>
       </div>
     </div>
   </section>
