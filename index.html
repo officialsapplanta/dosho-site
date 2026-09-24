@@ -52,32 +52,8 @@
     z-index: 0;
   }
 
-  nav.site {
-    position: relative;
-    z-index: 2;
-    max-width: 68rem;
-    margin: 0 auto;
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .brand img { height: 8.1rem; width: auto; display: block; }
-  .badge {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--online);
-    border: 1px solid rgba(52, 211, 153, 0.35);
-    border-radius: 999px;
-    padding: 0.35rem 0.85rem;
-    background: rgba(52, 211, 153, 0.08);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .badge::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--online); }
+  .brand img { height: 8.1rem; width: auto; display: block; margin: 0 0 1.5rem; }
+  @media (max-width: 56rem) { .brand img { margin-left: auto; margin-right: auto; } }
 
   main { position: relative; z-index: 1; }
 
@@ -347,16 +323,12 @@
 
 <div class="glow" aria-hidden="true"></div>
 
-<nav class="site">
-  <div class="brand"><img src="dosho-logo.png" alt="Dosho"></div>
-  <span class="badge">Live on Android</span>
-</nav>
-
 <main>
   <div class="hero-banner">
   <div class="hero-figure" aria-hidden="true"><img src="banner-full.jpg" alt=""></div>
   <section class="hero" style="border-top: none; padding-top: clamp(2rem, 6vw, 4rem);">
     <div>
+      <div class="brand"><img src="dosho-logo.png" alt="Dosho"></div>
       <p class="eyebrow">Live video chat</p>
       <h1>Meet new people, <span class="accent">on your terms.</span></h1>
       <p class="tagline">Video call one on one, join live rooms full of people, or go live yourself. Creators earn per minute, and everyone can earn just by sharing the app.</p>
