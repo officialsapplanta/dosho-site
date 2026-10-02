@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0D0710">
+<title>Private by design · Dosho</title>
+<meta name="description" content="What protects you on Dosho today, and what we are still building. Plain language, no small print.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dosho.site/private-by-design.html">
+<meta property="og:title" content="Private by design · Dosho">
+<meta property="og:description" content="What protects you on Dosho today, and what we are still building.">
+<meta property="og:image" content="https://dosho.site/og-image.jpg">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --dusk: #0D0710; --deep: #150A19; --panel: #1C1122; --panel-2: #241530; --line: #311B36;
+    --bone: #FAF2F6; --muted: #B29CAE; --dim: #9A8296;
+    --petal: #FFC5DD; --bloom: #FF6FA8; --rose: #E84393;
+    --gradient: linear-gradient(135deg, #FFC5DD 0%, #FF6FA8 55%, #E84393 100%);
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+  body {
+    margin: 0; background: var(--dusk); color: var(--bone); font-family: var(--sans); line-height: 1.6;
+    background-image: radial-gradient(44rem 26rem at 70% -8%, rgba(232, 67, 147, 0.2), transparent 70%);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 2px solid var(--bloom); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 0 1.5rem; }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .brand .mark { height: 2.4rem; width: auto; }
+  .brand .word { height: 1.5rem; width: auto; }
+  .back { color: var(--muted); text-decoration: none; font-size: 0.92rem; }
+  .back:hover { color: var(--bone); }
+  .eyebrow { margin: 3rem 0 1rem; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--petal); }
+  h1 { font-family: var(--display); font-weight: 300; font-size: clamp(2.4rem, 6vw, 3.8rem); line-height: 1.05; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+  h1 em { color: var(--petal); font-style: italic; }
+  .lede { color: var(--muted); font-size: 1.1rem; margin: 1.25rem 0 0; max-width: 34rem; }
+  h2 { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--petal); font-weight: 600; margin: 3rem 0 1rem; }
+  .item { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 1.25rem 1.4rem; margin: 0 0 0.9rem; }
+  .item h3 { font-family: var(--sans); font-weight: 600; font-size: 1.02rem; margin: 0 0 0.35rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .item p { margin: 0; color: var(--muted); font-size: 0.96rem; }
+  .tag { font-size: 0.72rem; font-weight: 600; color: #FFC107; background: rgba(255, 193, 7, 0.14); border-radius: 999px; padding: 0.1rem 0.6rem; }
+  footer { border-top: 1px solid var(--line); margin-top: 4rem; padding: 2rem 0 3rem; color: var(--dim); font-size: 0.86rem; }
+  footer a { color: var(--muted); text-decoration: none; margin-right: 1.25rem; }
+  footer a:hover { color: var(--bone); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Primary">
+    <a class="brand" href="/" aria-label="Dosho home"><img class="mark" src="dosho-mark.png" alt="" width="192" height="192"><img class="word" src="dosho-wordmark.png" alt="Dosho" width="480" height="127"></a>
+    <a class="back" href="/">&larr; Home</a>
+  </nav>
+
+  <main>
+    <p class="eyebrow">Trust &amp; safety</p>
+    <h1>Private <em>by design.</em></h1>
+    <p class="lede">Closeness needs safety. Here is what protects you on Dosho today, and the one thing we are still working on.</p>
+
+    <h2>Protected today</h2>
+    <article class="item"><h3>Screenshots alert both sides</h3><p>On Android, chats and rooms block screenshots and screen recording outright. On iPhone a capture cannot be blocked, so the other person is told the moment it happens, and so are you.</p></article>
+    <article class="item"><h3>Your coordinates stay private</h3><p>Your precise location is used to suggest people and rooms near you. Nobody is ever shown your exact coordinates.</p></article>
+    <article class="item"><h3>Verified creators</h3><p>Creators confirm their age and identity with an ID and a live selfie. Those photos are used only for verification and are deleted once they are no longer needed.</p></article>
+    <article class="item"><h3>A wallet that cannot be spoofed</h3><p>Balances and charges are worked out on our servers, not on your phone, so they cannot be edited or spent twice.</p></article>
+    <article class="item"><h3>Deleting your account means it</h3><p>When you delete your account your profile disappears straight away, and after 30 days your remaining personal details are permanently anonymized.</p></article>
+    <article class="item"><h3>AI only if both of you say yes</h3><p>AI chat summaries are off by default. A chat can only be summarized when both people have turned the feature on, and only when one of you asks. The text of the chat is sent to an AI service to write the summary, which is saved only to the private Journal of the person who asked.</p></article>
+
+    <h2>On our roadmap</h2>
+    <article class="item"><h3>End-to-end encryption <span class="tag">Not yet</span></h3><p>Messages travel over encrypted connections, but they are not end-to-end encrypted yet, which means Dosho's systems can access them, for example to handle a report. We want to change that, so not even we can read them, and we will announce it here when it ships.</p></article>
+  </main>
+
+  <footer>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/community-guidelines.html">Community Guidelines</a>
+    <a href="/child-safety.html">Child Safety</a>
+    <a href="/support.html">Support</a>
+  </footer>
+</div>
+</body>
+</html>
