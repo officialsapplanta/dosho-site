@@ -56,7 +56,7 @@
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; }
-  img { max-width: 100%; display: block; }
+  img { max-width: 100%; height: auto; display: block; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--bloom); outline-offset: 3px; border-radius: 6px; }
 
   .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
@@ -72,7 +72,11 @@
   /* ---------- Nav ---------- */
   nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; }
   .brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
-  .brand img { height: 2.1rem; width: auto; border-radius: 8px; }
+  .brand { gap: 0.6rem; }
+  /* Transparent PNGs (backdrop knocked out), so they sit directly on the page. */
+  .brand img { width: auto; }
+  .brand .mark { height: 2.4rem; }
+  .brand .word { height: 1.5rem; }
   .nav-links { display: flex; align-items: center; gap: 1.75rem; font-size: 0.92rem; color: var(--muted); }
   .nav-links a { text-decoration: none; }
   .nav-links a:hover { color: var(--bone); }
@@ -108,7 +112,7 @@
 
   .phones { position: relative; height: 38rem; }
   .shot {
-    position: absolute; display: block;
+    position: absolute; display: block; height: auto;
     /* Soft edges so the screenshots' own backdrop melts into the page. */
     -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
     -webkit-mask-composite: source-in;
@@ -198,7 +202,7 @@
 
 <header class="wrap">
   <nav aria-label="Primary">
-    <a class="brand" href="/" aria-label="Dosho home"><img src="dosho-logo.png" alt="Dosho"></a>
+    <a class="brand" href="/" aria-label="Dosho home"><img class="mark" src="dosho-mark.png" alt="" width="192" height="192"><img class="word" src="dosho-wordmark.png" alt="Dosho" width="480" height="127"></a>
     <div class="nav-links">
       <a class="hide-sm" href="#screens">Inside the app</a>
       <a class="hide-sm" href="#earn">Earn</a>
