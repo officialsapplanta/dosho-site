@@ -3,508 +3,343 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0D0710">
 <title>Dosho</title>
-<meta name="description" content="Meet new people, video call, or join live rooms. Creators earn per minute, everyone can earn as an affiliate.">
+<meta name="description" content="Grow closer, on purpose. Video calls, live rooms you can just listen to, and creators who earn. 18+ and ID-verified.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dosho.site">
-<meta property="og:title" content="Dosho: Live Video Chat and Earn">
-<meta property="og:description" content="Meet new people, video call, or join live rooms. Creators earn per minute, everyone can earn as an affiliate.">
+<meta property="og:title" content="Dosho: Grow closer, on purpose.">
+<meta property="og:description" content="Video calls, live rooms you can just listen to, and creators who earn. 18+ and ID-verified.">
 <meta property="og:image" content="https://dosho.site/og-image.jpg">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="583">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Dosho: Live Video Chat and Earn">
-<meta name="twitter:description" content="Meet new people, video call, or join live rooms. Creators earn per minute, everyone can earn as an affiliate.">
+<meta name="twitter:title" content="Dosho: Grow closer, on purpose.">
+<meta name="twitter:description" content="Video calls, live rooms you can just listen to, and creators who earn. 18+ and ID-verified.">
 <meta name="twitter:image" content="https://dosho.site/og-image.jpg">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="favicon.png">
-<link rel="preload" as="image" href="banner-cutout3.webp">
+<link rel="preload" as="image" href="screens/discover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
 <style>
+  /* The app's own palette, named the way the design system names it. */
   :root {
-    --bg: #07070E;
-    --bg-elevated: #120C1B;
-    --bg-elevated-2: #1A1226;
-    --text: #F5EDF2;
-    --text-muted: #A390A6;
-    --text-dim: #6E5E73;
-    --accent: #F72585;
-    --accent-2: #B5179E;
-    --online: #34D399;
-    --gradient: linear-gradient(135deg, #F72585 0%, #B5179E 100%);
-    --border: rgba(247, 37, 133, 0.16);
-    --border-strong: rgba(247, 37, 133, 0.32);
+    --dusk: #0D0710;
+    --deep: #150A19;
+    --panel: #1C1122;
+    --panel-2: #241530;
+    --line: #311B36;
+    --bone: #FAF2F6;
+    --muted: #B29CAE;
+    --dim: #80687B;
+    --petal: #FFC5DD;
+    --bloom: #FF6FA8;
+    --rose: #E84393;
+    --gradient: linear-gradient(135deg, #FFC5DD 0%, #FF6FA8 55%, #E84393 100%);
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
+  html { scroll-behavior: smooth; color-scheme: dark; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--dusk);
+    color: var(--bone);
+    font-family: var(--sans);
+    line-height: 1.55;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
-
   a { color: inherit; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   img { max-width: 100%; display: block; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--bloom); outline-offset: 3px; border-radius: 6px; }
 
-  .glow {
-    position: fixed;
-    top: -20%;
-    left: 50%;
-    width: 70rem;
-    height: 70rem;
-    transform: translateX(-50%);
-    background: radial-gradient(circle, rgba(247, 37, 133, 0.14) 0%, rgba(181, 23, 158, 0.08) 35%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
 
-  .brand img { height: 8.1rem; width: auto; display: block; margin: 0 0 1.5rem; }
-  @media (max-width: 56rem) { .brand img { margin-left: auto; margin-right: auto; } }
-
-  main { position: relative; z-index: 1; }
-
-  .hero-banner {
-    position: relative;
-    overflow: hidden;
-    min-height: 30rem;
-    background: radial-gradient(120% 100% at 15% 20%, rgba(181, 23, 158, 0.16) 0%, transparent 60%), var(--bg);
+  /* Ambient bloom behind the hero, like the app's welcome screen. */
+  .bloom {
+    position: absolute; inset: 0 0 auto 0; height: 46rem; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(40rem 28rem at 78% 22%, rgba(232, 67, 147, 0.22), transparent 70%),
+      radial-gradient(30rem 22rem at 12% 8%, rgba(255, 197, 221, 0.07), transparent 70%);
   }
 
-  .hero-figure {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 48%;
-    min-height: 30rem;
-    pointer-events: none;
-    z-index: 0;
+  /* ---------- Nav ---------- */
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; }
+  .brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+  .brand img { height: 2.1rem; width: auto; border-radius: 8px; }
+  .nav-links { display: flex; align-items: center; gap: 1.75rem; font-size: 0.92rem; color: var(--muted); }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--bone); }
+  @media (max-width: 40rem) { .nav-links .hide-sm { display: none; } }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none;
+    font-weight: 600; font-size: 0.98rem; padding: 0.85rem 1.5rem; border-radius: 999px;
+    border: 1px solid transparent; transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .hero-figure img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: bottom right;
-    -webkit-mask-image: linear-gradient(to left, black 80%, transparent 100%);
-    mask-image: linear-gradient(to left, black 80%, transparent 100%);
-    filter: drop-shadow(-10px 20px 40px rgba(0,0,0,0.5));
-  }
-  @media (max-width: 56rem) {
-    .hero-figure { position: relative; width: 100%; height: 22rem; min-height: 0; }
-    .hero-figure img { object-position: bottom center; -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 100%); mask-image: linear-gradient(to bottom, black 88%, transparent 100%); }
+  .btn-primary { background: var(--gradient); color: #1a0a14; box-shadow: 0 8px 28px rgba(232, 67, 147, 0.28); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 34px rgba(232, 67, 147, 0.38); }
+  .btn-ghost { border-color: var(--line); color: var(--bone); background: rgba(28, 17, 34, 0.6); }
+  .btn-ghost:hover { border-color: var(--bloom); }
+  .btn-sm { padding: 0.55rem 1.05rem; font-size: 0.88rem; }
+  .soon {
+    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem; color: var(--dim);
+    border: 1px dashed var(--line); border-radius: 999px; padding: 0.8rem 1.25rem;
   }
 
-  .hero {
-    position: relative;
-    z-index: 1;
-    max-width: 68rem;
-    margin: 0 auto;
-    padding: clamp(2rem, 6vw, 4rem) 1.5rem clamp(3rem, 6vw, 5rem);
-  }
-  .hero > div { max-width: 34rem; }
-  @media (max-width: 56rem) {
-    .hero { text-align: center; }
-    .hero > div { max-width: none; margin: 0 auto; }
-    .hero-actions { justify-content: center; }
-  }
+  /* ---------- Hero ---------- */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 3rem; align-items: center; padding: 3rem 0 4rem; }
   .eyebrow {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin: 0 0 1.25rem;
+    margin: 0 0 1rem; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--petal);
   }
-  h1 {
-    font-family: "Unbounded", -apple-system, "Segoe UI", Roboto, sans-serif;
-    font-size: clamp(2.4rem, 6vw, 4.4rem);
-    line-height: 1.05;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    text-wrap: balance;
-    margin: 0 0 1.5rem;
-  }
-  h1 .accent {
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .tagline {
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
-    color: var(--text-muted);
-    max-width: 36ch;
-    margin: 0 0 2.25rem;
-    line-height: 1.6;
-  }
-  @media (max-width: 56rem) { .tagline { margin-left: auto; margin-right: auto; } }
+  h1, h2, h3 { font-family: var(--display); font-weight: 300; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(2.8rem, 6.4vw, 5rem); line-height: 1.02; letter-spacing: -0.02em; }
+  h1 em, h2 em { font-style: italic; color: var(--petal); }
+  .hero > div:first-child { position: relative; z-index: 3; }
+  .lede { margin: 1.5rem 0 0; max-width: 30rem; color: var(--muted); font-size: 1.1rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; align-items: center; }
 
-  .hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; align-items: center; }
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    background: var(--gradient);
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 0.85rem 1.6rem;
-    border-radius: 12px;
-    text-decoration: none;
-    box-shadow: 0 8px 30px -8px rgba(247, 37, 133, 0.55);
+  .phones { position: relative; height: 38rem; }
+  .shot {
+    position: absolute; display: block;
+    /* Soft edges so the screenshots' own backdrop melts into the page. */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+    mask-composite: intersect;
   }
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    text-decoration: none;
-    border: 1px solid var(--border);
-    padding: 0.8rem 1.3rem;
-    border-radius: 12px;
-  }
-  .btn-secondary:hover { color: var(--text); border-color: var(--border-strong); }
+  .phones .front { width: 18rem; left: 50%; top: 0; transform: translateX(-10%); z-index: 2; }
+  .phones .back { width: 15.5rem; left: 50%; top: 3.5rem; transform: translateX(-92%) rotate(-5deg); z-index: 1; opacity: 0.85; }
 
-  .status-strip {
-    max-width: 68rem;
-    margin: 0 auto;
-    padding: 0 1.5rem 4rem;
-    display: flex;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-    border-top: 1px solid var(--border);
-    padding-top: 2rem;
-  }
-  .stat dt {
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 0.35rem;
-  }
-  .stat dd { margin: 0; font-size: 1.05rem; font-weight: 600; }
-
-  section { max-width: 68rem; margin: 0 auto; padding: 5rem 1.5rem; border-top: 1px solid var(--border); }
-  .section-head { max-width: 32rem; margin: 0 auto 3rem; text-align: center; }
-  .section-head .eyebrow { margin-bottom: 1rem; }
-  h2 { font-family: "Unbounded", -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 700; }
-  .section-head h2 {
-    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
-    line-height: 1.2;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    margin: 0;
-    text-wrap: balance;
+  @media (max-width: 56rem) {
+    .hero { grid-template-columns: 1fr; padding-top: 1.5rem; }
+    .phones { height: 30rem; overflow: hidden; }
+    .phones .front { width: 14.5rem; transform: translateX(-35%); }
+    .phones .back { width: 12.5rem; top: 3rem; transform: translateX(-88%) rotate(-5deg); }
   }
 
-  /* Shared horizontal-scroll carousel -- every section with multiple
-     cards/images uses this instead of a grid, so the whole page has one
-     consistent "swipe sideways" interaction rather than rows that wrap. */
-  .carousel {
-    display: flex;
-    gap: 1.25rem;
-    overflow-x: auto;
-    padding: 0.5rem 0 1rem;
-    scroll-snap-type: x mandatory;
+  /* ---------- Facts strip ---------- */
+  .facts {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin: 0 0 5rem;
+  }
+  .fact { background: var(--deep); padding: 1.25rem 1.5rem; }
+  .fact dt { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); margin: 0 0 0.3rem; font-weight: 600; }
+  .fact dd { margin: 0; font-weight: 500; }
+  @media (max-width: 44rem) { .facts { grid-template-columns: 1fr; } }
+
+  /* ---------- Sections ---------- */
+  section { margin: 0 0 6rem; }
+  .head { max-width: 40rem; margin: 0 0 2.25rem; }
+  h2 { font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1.08; letter-spacing: -0.015em; }
+  .head p { color: var(--muted); margin: 1rem 0 0; }
+
+  /* App screens: a real scroll-snap row, no auto-scroll fighting the visitor. */
+  .gallery {
+    display: flex; gap: 1.25rem; overflow-x: auto; padding: 0.5rem 1.5rem 1.5rem; margin: 0 -1.5rem;
+    scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--line) transparent;
     -webkit-overflow-scrolling: touch;
-    /* Fades the trailing edge so a partially-visible next card reads as
-       "swipe for more" rather than a cut-off image. */
-    mask-image: linear-gradient(to right, black calc(100% - 3rem), transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, black calc(100% - 3rem), transparent 100%);
   }
-  .carousel::-webkit-scrollbar { height: 6px; }
-  .carousel::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
-  /* On wider screens these three carousels' cards fit without needing to
-     scroll, so center them instead of leaving them stranded on the left. */
-  @media (min-width: 56rem) {
-    .carousel-center { justify-content: center; }
-  }
+  .gallery figure { flex: 0 0 auto; width: 15.5rem; margin: 0; scroll-snap-align: start; }
+  .gallery .shot { position: static; width: 100%; }
+  .gallery figcaption { margin-top: 0.6rem; font-size: 0.88rem; color: var(--muted); text-align: center; }
+  .gallery figcaption b { display: block; color: var(--bone); font-weight: 600; font-size: 0.95rem; }
 
-  .step {
-    flex: 0 0 auto;
-    width: 16rem;
-    scroll-snap-align: start;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.75rem;
-  }
-  .step .mark { font-size: 1.6rem; color: var(--accent); margin: 0 0 1rem; font-weight: 800; }
-  .step h3 { font-size: 1.05rem; margin: 0 0 0.5rem; }
-  .step p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin: 0; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 1.75rem; }
+  .card h3 { font-size: 1.55rem; margin: 0 0 0.6rem; line-height: 1.15; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.97rem; }
+  .card .tag { display: inline-block; margin-bottom: 1rem; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bloom); font-weight: 600; }
+  @media (max-width: 56rem) { .pillars { grid-template-columns: 1fr; } }
 
-  .showcase-item {
-    flex: 0 0 auto;
-    width: 16rem;
-    height: 28rem;
-    scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+  .earn { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .example {
+    margin-top: 1.25rem; padding: 0.85rem 1rem; border-radius: 14px; font-size: 0.88rem; font-weight: 500;
+    color: var(--petal); background: rgba(255, 111, 168, 0.08); border: 1px solid var(--line);
   }
-  .showcase-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 1rem;
-  }
+  @media (max-width: 44rem) { .earn { grid-template-columns: 1fr; } }
 
-  .earn-card {
-    flex: 0 0 auto;
-    width: 18rem;
-    scroll-snap-align: start;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-  }
-  .earn-card .icon {
-    width: 3rem; height: 3rem; border-radius: 50%;
-    background: rgba(247, 37, 133, 0.14);
-    color: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.25rem;
-  }
-  .earn-card h3 { font-size: 1.15rem; margin: 0 0 0.6rem; }
-  .earn-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0 0 1rem; }
-  .earn-card .example {
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-weight: 600;
-    background: rgba(247, 37, 133, 0.08);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.7rem 0.9rem;
-  }
+  .trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .trust .card { padding: 1.5rem; border-radius: 18px; background: var(--deep); }
+  .trust h3 { font-family: var(--sans); font-weight: 600; font-size: 1rem; margin: 0.9rem 0 0.4rem; }
+  .trust .dot { display: block; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gradient); }
+  @media (max-width: 64rem) { .trust { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 36rem) { .trust { grid-template-columns: 1fr; } }
 
-  .trust-item {
-    flex: 0 0 auto;
-    width: 16rem;
-    scroll-snap-align: start;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.5rem;
+  .cta {
+    text-align: center; padding: clamp(3rem, 7vw, 5rem) 1.5rem; border-radius: 28px; border: 1px solid var(--line);
+    background: radial-gradient(30rem 16rem at 50% 0%, rgba(232, 67, 147, 0.2), transparent 70%), var(--panel);
   }
-  .trust-item .dot { display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--gradient); margin-bottom: 0.75rem; }
-  .trust-item h4 { margin: 0 0 0.4rem; font-size: 1rem; }
-  .trust-item p { margin: 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+  .cta h2 { margin-bottom: 0.9rem; }
+  .cta p { color: var(--muted); margin: 0 auto 2rem; max-width: 30rem; }
+  .cta .hero-actions { justify-content: center; margin-top: 0; }
 
-  .cta-final {
-    text-align: center;
-    background: var(--bg-elevated);
-    border-radius: 24px;
-    border: 1px solid var(--border);
-    padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
-  }
-  .cta-final h2 { margin: 0 0 1rem; }
-  .cta-final p { color: var(--text-muted); max-width: 32ch; margin: 0 auto 2rem; }
+  footer { border-top: 1px solid var(--line); padding: 2.5rem 0 3.5rem; color: var(--dim); font-size: 0.86rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .links a { text-decoration: none; color: var(--muted); }
+  .links a:hover { color: var(--bone); }
 
-  footer {
-    max-width: 68rem;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 4rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    color: var(--text-dim);
-    font-size: 0.85rem;
-    position: relative;
-    z-index: 1;
-  }
-  footer a { text-decoration: none; color: var(--text-muted); }
-  footer a:hover { color: var(--text); }
-  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .glow { animation: drift 22s ease-in-out infinite alternate; }
-  }
-  @keyframes drift {
-    from { transform: translateX(-52%) translateY(0); }
-    to { transform: translateX(-48%) translateY(2rem); }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
   }
 </style>
 </head>
 <body>
+<div class="bloom" aria-hidden="true"></div>
 
-<div class="glow" aria-hidden="true"></div>
+<header class="wrap">
+  <nav aria-label="Primary">
+    <a class="brand" href="/" aria-label="Dosho home"><img src="dosho-logo.png" alt="Dosho"></a>
+    <div class="nav-links">
+      <a class="hide-sm" href="#screens">Inside the app</a>
+      <a class="hide-sm" href="#earn">Earn</a>
+      <a class="hide-sm" href="#safety">Safety</a>
+      <a class="btn btn-ghost btn-sm" href="https://play.google.com/store/apps/details?id=app.dosho.android">Get the app</a>
+    </div>
+  </nav>
+</header>
 
 <main>
-  <div class="hero-banner">
-  <div class="hero-figure" aria-hidden="true"><img src="banner-cutout3.webp" alt="" fetchpriority="high"></div>
-  <section class="hero" style="border-top: none; padding-top: clamp(2rem, 6vw, 4rem);">
-    <div>
-      <div class="brand"><img src="dosho-logo.png" alt="Dosho"></div>
-      <p class="eyebrow">Live video chat</p>
-      <h1>Meet new people, <span class="accent">on your terms.</span></h1>
-      <p class="tagline">Video call one on one, join live rooms full of people, or go live yourself. Creators earn per minute, and everyone can earn just by sharing the app.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
-          <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2 -60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6 -256L47 0zm425.2 225.6l-58.9 -34.1 -65.7 64.5 65.7 64.5 60.1 -34.1c18 -14.3 18 -46.5 -1.2 -60.8zM104.6 499l280.8 -161.2 -60.1 -60.1L104.6 499z"/></svg> Get it on Google Play
-        </a>
-        <a class="btn-secondary" href="#earn">See how you earn</a>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Live video, on purpose</p>
+        <h1>Grow closer, <em>on purpose.</em></h1>
+        <p class="lede">Video calls, chat, and live rooms you can just listen to. One mission a day instead of an endless feed, and creators who are ID-verified and paid for their time.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
+            <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+            Get it on Google Play
+          </a>
+          <span class="soon">iOS is coming soon</span>
+        </div>
+      </div>
+      <div class="phones" aria-hidden="true">
+        <img class="shot back" src="screens/rooms.jpg" alt="" width="640" height="1105">
+        <img class="shot front" src="screens/discover.jpg" alt="" width="640" height="1105" fetchpriority="high">
       </div>
     </div>
-  </section>
+
+    <dl class="facts">
+      <div class="fact"><dt>Access</dt><dd>18+, ID-verified creators</dd></div>
+      <div class="fact"><dt>Platform</dt><dd>Android now, iOS coming soon</dd></div>
+      <div class="fact"><dt>Earn</dt><dd>Per minute, from gifts, or as an affiliate</dd></div>
+    </dl>
+
+    <section id="screens" aria-labelledby="screens-h">
+      <div class="head">
+        <p class="eyebrow">Inside the app</p>
+        <h2 id="screens-h">Quiet, warm, <em>unhurried.</em></h2>
+        <p>A look at how Dosho feels, from the first screen to a live call.</p>
+      </div>
+      <div class="gallery" tabindex="0" aria-label="App screens, scroll sideways">
+        <figure><img class="shot" src="screens/welcome.jpg" alt="Dosho welcome screen with three promises" loading="lazy" width="640" height="1105"><figcaption><b>Welcome</b>Three promises, one tap in</figcaption></figure>
+        <figure><img class="shot" src="screens/discover.jpg" alt="Discover feed showing a verified creator card" loading="lazy" width="640" height="1105"><figcaption><b>Discover</b>People, with the reason why</figcaption></figure>
+        <figure><img class="shot" src="screens/rooms.jpg" alt="List of live rooms" loading="lazy" width="640" height="1105"><figcaption><b>Rooms</b>Listen in first, speak when ready</figcaption></figure>
+        <figure><img class="shot" src="screens/chat.jpg" alt="A one-to-one chat" loading="lazy" width="640" height="1102"><figcaption><b>Chat</b>Conversations that feel like yours</figcaption></figure>
+        <figure><img class="shot" src="screens/other-profile.jpg" alt="Another person's profile" loading="lazy" width="640" height="1102"><figcaption><b>Profiles</b>Photos, videos and words</figcaption></figure>
+        <figure><img class="shot" src="screens/call-video.jpg" alt="A live video call" loading="lazy" width="640" height="1105"><figcaption><b>Video calls</b>Face to face, per minute</figcaption></figure>
+        <figure><img class="shot" src="screens/become-creator.jpg" alt="Become a creator screen" loading="lazy" width="640" height="1105"><figcaption><b>Become a creator</b>Verify once, earn from your time</figcaption></figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="how-h">
+      <div class="head">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-h">Discover, connect, <em>stay.</em></h2>
+      </div>
+      <div class="pillars">
+        <article class="card">
+          <span class="tag">Discover</span>
+          <h3>Meet people for a reason</h3>
+          <p>Browse verified creators, each with their own message and video-call rate, and see why someone was suggested to you.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Rooms</span>
+          <h3>Rooms you can just listen to</h3>
+          <p>Drop into a live room already in progress. Listen first, and raise your hand to speak only when you feel like it.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Calls &amp; chat</span>
+          <h3>Pay for what you use</h3>
+          <p>Message or video call using coins you top up in advance. No subscriptions, and no surprises on what a minute costs.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="earn" aria-labelledby="earn-h">
+      <div class="head">
+        <p class="eyebrow">Earn on Dosho</p>
+        <h2 id="earn-h">Two ways to <em>earn.</em></h2>
+      </div>
+      <div class="earn">
+        <article class="card">
+          <span class="tag">Creators</span>
+          <h3>Get paid for your time</h3>
+          <p>Any verified user can be a creator. Set your own rate per message and per minute of video, host rooms, and receive gifts. Earnings are paid out to the payout method you add in the app.</p>
+          <div class="example">Example: 100 coins a minute &times; a 10 minute call = 1,000 coins earned</div>
+        </article>
+        <article class="card">
+          <span class="tag">Affiliate</span>
+          <h3>Share your code, earn for life</h3>
+          <p>Everyone is automatically an affiliate. Your username is your referral code, and you earn 5% of whatever the people who join through you spend or earn. It's not a one-time bonus.</p>
+          <div class="example">Example: they spend 1,000 coins &rarr; you earn 50, every time</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="safety" aria-labelledby="safety-h">
+      <div class="head">
+        <p class="eyebrow">Trust &amp; safety</p>
+        <h2 id="safety-h">Built on <em>trust.</em></h2>
+      </div>
+      <div class="trust">
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Real identity verification</h3><p>Creators confirm their age and identity with a government ID and a live selfie before they can earn.</p></article>
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>18+ only</h3><p>Every account confirms it meets our age requirement at sign-up.</p></article>
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Server-side wallet</h3><p>Balances and charges are calculated on our servers, not your device, so a balance can't be spoofed or spent twice.</p></article>
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Screenshots alert both sides</h3><p>Private chats and rooms tell everyone when someone tries to capture the screen.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="cta-h">
+      <div class="cta">
+        <p class="eyebrow">Ready?</p>
+        <h2 id="cta-h">Start <em>today.</em></h2>
+        <p>Free to join. You only pay for what you use.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
+            <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+            Get it on Google Play
+          </a>
+          <span class="soon">iOS is coming soon</span>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <div class="status-strip">
-    <dl class="stat"><dt>Access</dt><dd>18+, ID-verified creators</dd></dl>
-    <dl class="stat"><dt>Platform</dt><dd>Android, live now</dd></dl>
-    <dl class="stat"><dt>Earn</dt><dd>Per minute, or as an affiliate</dd></dl>
-  </div>
-
-  <section id="how">
-    <div class="section-head">
-      <p class="eyebrow">How it works</p>
-      <h2>Discover, connect, earn.</h2>
-    </div>
-    <div class="carousel carousel-center">
-      <div class="step">
-        <p class="mark">01</p>
-        <h3>Discover</h3>
-        <p>Browse verified creators, each with their own message and video-call rate, or drop into a live room already in progress.</p>
-      </div>
-      <div class="step">
-        <p class="mark">02</p>
-        <h3>Message or call</h3>
-        <p>Pay per message or per minute of video, using coins you top up in advance. No subscriptions, no surprises.</p>
-      </div>
-      <div class="step">
-        <p class="mark">03</p>
-        <h3>Creators earn</h3>
-        <p>Creators keep the majority of what's spent on their time, tracked and paid out directly, weekly.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head">
-      <p class="eyebrow">Inside the app</p>
-      <h2>See the app.</h2>
-    </div>
-    <div class="carousel">
-      <div class="showcase-item"><img src="screenshots/welcome.jpg" alt="Welcome screen" loading="lazy"></div>
-      <div class="showcase-item"><img src="screenshots/discover.jpg" alt="Discover feed" loading="lazy"></div>
-      <div class="showcase-item"><img src="screenshots/creator-profile.jpg" alt="Creator profile" loading="lazy"></div>
-      <div class="showcase-item"><img src="screenshots/match.jpg" alt="Instant match" loading="lazy"></div>
-      <div class="showcase-item"><img src="screenshots/buy-coins.jpg" alt="Buy coins" loading="lazy"></div>
-    </div>
-  </section>
-
-  <section id="earn">
-    <div class="section-head">
-      <p class="eyebrow">Earn on Dosho</p>
-      <h2>Two ways to earn.</h2>
-    </div>
-    <div class="carousel carousel-center">
-      <div class="earn-card">
-        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
-        <h3>Go live as a creator</h3>
-        <p>Set your own rate per message and per minute of video. Get paid for every conversation, every call, every room you host.</p>
-        <div class="example">Example: 100 coins/min × 10 min call = 1,000 coins earned</div>
-      </div>
-      <div class="earn-card">
-        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
-        <h3>Earn as an affiliate</h3>
-        <p>Everyone's automatically an affiliate. Your username is your referral code. Share it, and earn 5% of whatever anyone who joins through you ever spends or earns. Forever, not a one time bonus.</p>
-        <div class="example">Example: they spend 1,000 coins → you earn 50, every time, for as long as they're active</div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head">
-      <p class="eyebrow">Trust &amp; safety</p>
-      <h2>Built on trust.</h2>
-    </div>
-    <div class="carousel carousel-center">
-      <div class="trust-item">
-        <span class="dot" aria-hidden="true"></span>
-        <h4>Real identity verification</h4>
-        <p>Every creator confirms their age and identity with a government ID and live selfie before they can go live.</p>
-      </div>
-      <div class="trust-item">
-        <span class="dot" aria-hidden="true"></span>
-        <h4>Server-side wallet</h4>
-        <p>Coin balances and charges are calculated on our servers, not your device, so a balance can't be spoofed or double-spent.</p>
-      </div>
-      <div class="trust-item">
-        <span class="dot" aria-hidden="true"></span>
-        <h4>Age-verified accounts</h4>
-        <p>Every account confirms it meets our 18+ age requirement at sign-up and at creator verification.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="cta-final">
-      <p class="eyebrow" style="justify-content: center; display: flex;">Ready?</p>
-      <h2>Start today.</h2>
-      <p>Free to join, pay only for what you use.</p>
-      <a class="btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
-        <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2 -60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6 -256L47 0zm425.2 225.6l-58.9 -34.1 -65.7 64.5 65.7 64.5 60.1 -34.1c18 -14.3 18 -46.5 -1.2 -60.8zM104.6 499l280.8 -161.2 -60.1 -60.1L104.6 499z"/></svg> Get it on Google Play
-      </a>
-    </div>
-  </section>
 </main>
 
 <footer>
-  <span>&copy; 2026 Dosho. Operated by Sapplanta.</span>
-  <div class="footer-links">
-    <a href="https://t.me/DoshoSocialTechnologies">Telegram</a>
-    <a href="https://whatsapp.com/channel/0029VbDAJQf11ulWRBThTk3q">WhatsApp</a>
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="mailto:sapplantabusiness@gmail.com">Contact</a>
+  <div class="wrap">
+    <span>&copy; 2026 Dosho. Operated by Sapplanta.</span>
+    <div class="links">
+      <a href="https://t.me/DoshoSocialTechnologies">Telegram</a>
+      <a href="https://whatsapp.com/channel/0029VbDAJQf11ulWRBThTk3q">WhatsApp</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/community-guidelines.html">Community Guidelines</a>
+      <a href="/child-safety.html">Child Safety</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:sapplantabusiness@gmail.com">Contact</a>
+    </div>
   </div>
 </footer>
-
-<script>
-// Every .carousel auto-scrolls sideways, one card at a time, looping back
-// to the start -- pauses while the visitor is actually interacting with it
-// (hover, touch, or manual scroll) so it never fights their own scrolling.
-(function () {
-  document.querySelectorAll('.carousel').forEach(function (track) {
-    var paused = false;
-    var resumeTimer = null;
-    var pauseAwhile = function () {
-      paused = true;
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(function () { paused = false; }, 4000);
-    };
-    track.addEventListener('mouseenter', function () { paused = true; });
-    track.addEventListener('mouseleave', function () { paused = false; });
-    track.addEventListener('touchstart', pauseAwhile, { passive: true });
-    track.addEventListener('wheel', pauseAwhile, { passive: true });
-
-    setInterval(function () {
-      if (paused) return;
-      var card = track.firstElementChild;
-      if (!card) return;
-      var step = card.getBoundingClientRect().width + 20; // width + gap
-      var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-      track.scrollTo({
-        left: atEnd ? 0 : track.scrollLeft + step,
-        behavior: 'smooth',
-      });
-    }, 2800);
-  });
-})();
-</script>
-
 </body>
 </html>
