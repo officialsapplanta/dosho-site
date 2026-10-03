@@ -658,9 +658,15 @@ async function fillAttention() {
       card(a.affiliate, "Affiliate payouts", "affiliate-payouts") +
       card(a.methods, "Payout methods to approve", "payouts") +
       card(a.reports, "Reports to review", "reports") +
-      card(a.failed24h, "Failed payments · 24h", "transactions");
+      card(a.failed24h, "Failed payments · 24h", "transactions") +
+      `<button class="attn" onclick="sendNudges()"><div class="n">🔔</div><div class="l">Remind creators to finish verification</div></button>`;
   } catch (err) { el.innerHTML = `<div class="error-text">${esc(err.message)}</div>`; }
 }
+window.sendNudges = async () => {
+  if (!confirm("Send a reminder notification to creators who haven't finished (or didn't pass) ID verification? They also get one automatically each day at 10am.")) return;
+  try { const r = await api("/admin/verification-nudges/run", { method: "POST" }); toast(`Sent: ${r.unfinished} unfinished, ${r.rejected} rejected`); }
+  catch (err) { toast(err.message); }
+};
 
 // ---- Business report ----
 const RANGES = [["12h", "12 hours"], ["24h", "24 hours"], ["today", "Today"], ["7d", "7 days"], ["30d", "30 days"], ["all", "All time"]];
@@ -816,8 +822,18 @@ window.openPerson = async (id) => {
       <div class="panel"><h2>Recent payments</h2>
         ${u.recentPayments.length ? u.recentPayments.map((p) => `<div class="kv"><span>${fmtDate(p.createdAt)} · ${esc(p.status)}</span><b>${kes(p.amountKes)}</b></div>`).join("") : `<div class="muted">None.</div>`}
       </div>
-      ${u.deleted ? "" : `<button class="btn-sm ${u.isActive ? "btn-reject" : "btn-approve"}" onclick="togglePerson('${u.id}', ${!u.isActive})" style="padding:9px 16px">${u.isActive ? "Deactivate account" : "Reactivate account"}</button>`}`;
+      ${u.deleted ? "" : `<div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-sm btn-neutral" onclick="changeRole('${u.id}', '${u.role === "creator" ? "member" : "creator"}')" style="padding:9px 16px">${u.role === "creator" ? "Make a member" : "Make a creator"}</button>
+        <button class="btn-sm ${u.isActive ? "btn-reject" : "btn-approve"}" onclick="togglePerson('${u.id}', ${!u.isActive})" style="padding:9px 16px">${u.isActive ? "Deactivate account" : "Reactivate account"}</button>
+      </div>
+      ${u.role === "member" ? `<p class="muted" style="margin-top:10px">A new creator still has to pass ID verification before they appear in Discover. They get a notification to finish it.</p>` : ""}`}`;
   } catch (err) { dr.innerHTML = `<button class="btn-sm btn-neutral" onclick="closePerson()">Close</button><div class="error-text">${esc(err.message)}</div>`; }
+};
+window.changeRole = async (id, role) => {
+  const msg = role === "creator" ? "Make this person a creator? They will be asked to finish ID verification." : "Turn this creator back into a member? They will leave creator Discover.";
+  if (!confirm(msg)) return;
+  try { const r = await api(`/admin/directory/${id}/role`, { method: "POST", body: JSON.stringify({ role }) }); toast(r.message); openPerson(id); loadUsers(); }
+  catch (err) { toast(err.message); }
 };
 window.closePerson = () => { document.getElementById("drawer")?.remove(); document.getElementById("drawer-back")?.remove(); };
 window.togglePerson = async (id, active) => {
