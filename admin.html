@@ -4,29 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dosho Admin</title>
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;1,300&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="robots" content="noindex, nofollow">
 <style>
   :root {
-    --bg: #07070d;
-    --surface: #12121e;
-    --surface-elevated: #181826;
-    --border: rgba(255,255,255,0.08);
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255,255,255,0.65);
-    --text-tertiary: rgba(255,255,255,0.4);
-    --accent: #f72585;
-    --accent-2: #b5179e;
-    --danger: #ff5a5a;
-    --warning: #ffc107;
-    --online: #34d399;
+    --bg: #0D0710;
+    --surface: #1C1122;
+    --surface-elevated: #241530;
+    --border: rgba(250,242,246,0.09);
+    --text-primary: #FAF2F6;
+    --text-secondary: #B29CAE;
+    --text-tertiary: #8F7A8B;
+    --accent: #FF6FA8;
+    --accent-2: #E84393;
+    --danger: #ff6b7a;
+    --warning: #ffc36b;
+    --online: #5eead4;
+    --serif: "Fraunces", Georgia, serif;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
+    background-image: radial-gradient(48rem 28rem at 70% -10%, rgba(232,67,147,0.16), transparent 70%);
+    background-attachment: fixed;
   }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
@@ -64,23 +72,10 @@
     position: relative;
     box-shadow: 0 20px 60px rgba(0,0,0,0.35);
   }
-  /* logo.png's canvas has a lot of vertical glow padding around the actual
-     wordmark -- crop to just that band via a fixed-height wrapper with
-     overflow hidden rather than letting the whole padded canvas shrink to
-     a barely-visible sliver at small sizes. */
-  .login-logo {
-    height: 44px;
-    overflow: hidden;
-    display: block;
-    margin-bottom: 4px;
-    filter: drop-shadow(0 4px 16px rgba(247,37,133,0.35));
-  }
-  .login-logo img {
-    height: 128px;
-    width: auto;
-    display: block;
-    margin-top: -44px;
-  }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .brand img { width: 38px; height: 38px; border-radius: 10px; display: block; box-shadow: 0 6px 20px rgba(232,67,147,0.35); }
+  .brand span { font-family: var(--serif); font-size: 24px; font-style: italic; font-weight: 300; letter-spacing: -0.01em; }
+  .brand small { font-family: "Inter", sans-serif; font-style: normal; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-left: 2px; }
   .login-sub { color: var(--text-secondary); font-size: 13px; margin-bottom: 24px; }
   input[type="password"], input[type="text"], input[type="number"] {
     width: 100%;
@@ -101,10 +96,11 @@
   }
   .btn-primary {
     width: 100%;
+    color: #1a0713;
     padding: 12px;
     border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: white;
+    background: linear-gradient(135deg, #FFC5DD, var(--accent));
+    color: #1a0713;
     font-weight: 600;
     font-size: 14px;
   }
@@ -123,18 +119,10 @@
     display: flex;
     flex-direction: column;
   }
-  .sidebar-logo {
-    height: 26px;
-    overflow: hidden;
-    display: block;
-    margin: 0 10px 20px;
-  }
-  .sidebar-logo img {
-    height: 76px;
-    width: auto;
-    display: block;
-    margin-top: -25px;
-  }
+  .sidebar-logo { margin: 0 8px 22px; }
+  .sidebar-logo .brand { margin: 0; }
+  .sidebar-logo .brand img { width: 32px; height: 32px; border-radius: 9px; }
+  .sidebar-logo .brand span { font-size: 21px; }
   .nav-item {
     display: flex;
     align-items: center;
@@ -154,8 +142,8 @@
   .nav-item.active { background: var(--surface-elevated); color: var(--text-primary); border-left-color: var(--accent); }
   .nav-item.active .nav-icon { opacity: 1; }
   .nav-item:hover { color: var(--text-primary); background: var(--surface-elevated); }
-  main { flex: 1; padding: 28px 32px; max-width: 1100px; }
-  h1 { font-size: 22px; margin: 0 0 20px; letter-spacing: -0.01em; }
+  main { flex: 1; padding: 28px 32px; max-width: 1180px; min-width: 0; }
+  h1 { font-family: var(--serif); font-weight: 300; font-style: italic; font-size: 28px; margin: 0 0 18px; letter-spacing: -0.01em; }
   .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 28px; }
   .stat-card {
     background: var(--surface);
@@ -190,18 +178,51 @@
   }
   .btn-approve { background: var(--online); color: #04150e; }
   .btn-approve:hover { opacity: 0.88; }
-  .btn-reject { background: var(--danger); color: white; }
+  .btn-reject { background: var(--danger); color: #2a0a10; }
   .btn-reject:hover { opacity: 0.88; }
   .btn-neutral { background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border); }
 
   .tab-bar { display: flex; gap: 8px; margin-bottom: 16px; }
   .tab-btn { padding: 6px 14px; border-radius: 999px; background: var(--surface-elevated); color: var(--text-secondary); font-size: 13px; transition: background 0.15s ease, color 0.15s ease; }
   .tab-btn:hover { color: var(--text-primary); }
-  .tab-btn.active { background: var(--accent); color: white; }
+  .tab-btn.active { background: var(--accent); color: #1a0713; font-weight: 600; }
 
   .doc-links a { margin-right: 10px; font-size: 12px; }
 
   .loading, .empty { color: var(--text-tertiary); padding: 32px 20px; text-align: center; font-size: 13px; }
+
+  /* --- dashboard, directory, drawer --- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; align-items: center; }
+  .chip { padding: 6px 14px; border-radius: 999px; background: var(--surface-elevated); color: var(--text-secondary); font-size: 13px; border: 1px solid var(--border); }
+  .chip:hover { color: var(--text-primary); }
+  .chip.active { background: var(--accent); color: #1a0713; font-weight: 600; border-color: transparent; }
+  .attn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 22px; }
+  .attn { text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; color: var(--text-primary); }
+  .attn:hover { border-color: rgba(255,111,168,0.4); }
+  .attn .n { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .attn .l { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .attn.hot { border-color: rgba(255,111,168,0.55); background-image: radial-gradient(circle at top left, rgba(255,111,168,0.14), transparent 70%); }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; margin-bottom: 16px; }
+  .panel h2 { margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); font-weight: 600; }
+  .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .bar-row { display: grid; grid-template-columns: 120px 1fr auto; gap: 10px; align-items: center; font-size: 13px; padding: 5px 0; }
+  .bar { height: 8px; border-radius: 999px; background: var(--surface-elevated); overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: linear-gradient(90deg, #FFC5DD, var(--accent-2)); border-radius: 999px; }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .kv:last-child { border-bottom: none; }
+  .kv b { font-variant-numeric: tabular-nums; }
+  .muted { color: var(--text-tertiary); font-size: 12px; }
+  .searchbar { display: flex; gap: 10px; margin-bottom: 12px; }
+  .searchbar input { margin: 0; flex: 1; }
+  .rowlink { cursor: pointer; }
+  .pill-creator { background: rgba(255,111,168,0.16); color: var(--accent); }
+  .pill-member { background: rgba(178,156,174,0.16); color: var(--text-secondary); }
+  .pill-off { background: rgba(255,107,122,0.16); color: var(--danger); }
+  .drawer-back { position: fixed; inset: 0; background: rgba(5,2,8,0.6); z-index: 40; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--surface); border-left: 1px solid var(--border); z-index: 41; padding: 22px; overflow-y: auto; box-shadow: -20px 0 60px rgba(0,0,0,0.4); }
+  .drawer h3 { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 24px; margin: 0 0 4px; }
+  .pager { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+  .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: var(--surface-elevated); border: 1px solid var(--border); padding: 10px 18px; border-radius: 999px; font-size: 13px; z-index: 60; }
 
   @media (max-width: 720px) {
     #appShell { flex-direction: column; }
@@ -219,8 +240,8 @@
 
 <div id="loginScreen">
   <div class="login-card">
-    <div class="login-logo"><img src="logo.png" alt="Dosho" /></div>
-    <div class="login-sub">Admin dashboard</div>
+    <div class="brand"><img src="dosho-mark.png" alt=""><span>Dosho <small>Admin</small></span></div>
+    <div class="login-sub">Sign in to manage Dosho</div>
     <input type="password" id="passwordInput" placeholder="Admin password" />
     <div class="error-text hidden" id="loginError"></div>
     <button class="btn-primary" id="loginBtn">Sign In</button>
@@ -229,14 +250,18 @@
 
 <div id="appShell" class="hidden">
   <nav class="sidebar">
-    <div class="sidebar-logo"><img src="logo.png" alt="Dosho" /></div>
+    <div class="sidebar-logo"><div class="brand"><img src="dosho-mark.png" alt=""><span>Dosho</span></div></div>
     <button class="nav-item active" data-view="overview">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-      Overview
+      Dashboard
+    </button>
+    <button class="nav-item" data-view="bizreport">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>
+      Business report
     </button>
     <button class="nav-item" data-view="users">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Users
+      People
     </button>
     <button class="nav-item" data-view="verifications">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
@@ -260,7 +285,7 @@
     </button>
     <button class="nav-item" data-view="reports">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      Reports
+      Moderation
     </button>
     <button class="nav-item" data-view="growth">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
@@ -273,6 +298,7 @@
   </nav>
   <main>
     <div id="view-overview"></div>
+    <div id="view-bizreport" class="hidden"></div>
     <div id="view-users" class="hidden"></div>
     <div id="view-verifications" class="hidden"></div>
     <div id="view-payouts" class="hidden"></div>
@@ -402,6 +428,7 @@ document.querySelectorAll(".nav-item[data-view]").forEach((btn) => {
 
 function loadView(view) {
   if (view === "overview") loadOverview();
+  if (view === "bizreport") loadBizReport("24h");
   if (view === "users") loadUsers();
   if (view === "verifications") loadVerifications("pending");
   if (view === "payouts") loadPayouts("pending");
@@ -461,11 +488,13 @@ async function loadGrowth() {
 // ---- Overview ----
 async function loadOverview() {
   const el = document.getElementById("view-overview");
-  el.innerHTML = `<h1>Overview</h1><div class="loading">Loading...</div>`;
+  el.innerHTML = `<h1>Dashboard</h1><div class="loading">Loading...</div>`;
   try {
     const data = await api("/admin/overview");
     el.innerHTML = `
-      <h1>Overview</h1>
+      <h1>Dashboard</h1>
+      <div id="attention" class="attn-grid"></div>
+      <div id="dash-biz"></div>
       <div class="stat-grid">
         <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value">${data.totalUsers}</div></div>
         <div class="stat-card"><div class="stat-label">Active Creators</div><div class="stat-value">${data.activeCreators}</div></div>
@@ -504,6 +533,8 @@ async function loadOverview() {
       <button class="btn-sm btn-approve" id="upload-demo-photos" style="padding:8px 16px;">Upload demo photos</button>
       <p id="demo-photos-result" style="color:var(--text-tertiary);font-size:13px;margin-top:10px;"></p>
     `;
+    fillAttention();
+    fillDashBiz();
     document.getElementById("upload-demo-photos").addEventListener("click", uploadDemoPhotos);
     document.getElementById("run-seed-btn").addEventListener("click", runSeed);
   } catch (err) {
@@ -601,21 +632,199 @@ async function uploadDemoPhotos() {
   }
 }
 
-// ---- Users ----
+// ---- shared helpers for the new views ----
+function esc(t) { return String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+const kes = (n) => "KES " + Number(n || 0).toLocaleString("en-US");
+function toast(msg) {
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2600);
+}
+function goTo(view) { document.querySelector(`.nav-item[data-view="${view}"]`)?.click(); }
+window.goTo = goTo;
+
+// ---- Attention strip (what needs a human) ----
+async function fillAttention() {
+  const el = document.getElementById("attention");
+  if (!el) return;
+  try {
+    const a = await api("/admin/attention");
+    const card = (n, label, view) => `<button class="attn ${n > 0 ? "hot" : ""}" onclick="goTo('${view}')"><div class="n">${n}</div><div class="l">${label}</div></button>`;
+    el.innerHTML =
+      card(a.verifications, "Verifications waiting", "verifications") +
+      card(a.payouts, `Payouts waiting · ${kes(a.payoutKes)}`, "payouts") +
+      card(a.affiliate, "Affiliate payouts", "affiliate-payouts") +
+      card(a.methods, "Payout methods to approve", "payouts") +
+      card(a.reports, "Reports to review", "reports") +
+      card(a.failed24h, "Failed payments · 24h", "transactions");
+  } catch (err) { el.innerHTML = `<div class="error-text">${esc(err.message)}</div>`; }
+}
+
+// ---- Business report ----
+const RANGES = [["12h", "12 hours"], ["24h", "24 hours"], ["today", "Today"], ["7d", "7 days"], ["30d", "30 days"], ["all", "All time"]];
+function rangeChips(active, fn) {
+  return `<div class="chips">${RANGES.map(([k, l]) => `<button class="chip ${k === active ? "active" : ""}" onclick="${fn}('${k}')">${l}</button>`).join("")}</div>`;
+}
+function bars(rows, valueKey, fmt) {
+  const max = Math.max(1, ...rows.map((r) => r[valueKey]));
+  if (!rows.length) return `<div class="muted">Nothing in this period.</div>`;
+  return rows.map((r) => `<div class="bar-row"><span>${esc(r.name)}</span><div class="bar"><i style="width:${Math.round((r[valueKey] / max) * 100)}%"></i></div><b>${fmt(r)}</b></div>`).join("");
+}
+function reportHtml(r) {
+  const P = r.people, V = r.creatorVerification, B = r.purchases, Y = r.payouts, A = r.activity, M = r.moderation;
+  return `
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">New members</div><div class="stat-value">${P.newMembers}</div></div>
+      <div class="stat-card"><div class="stat-label">New creators</div><div class="stat-value">${P.newCreators}</div></div>
+      <div class="stat-card"><div class="stat-label">Paid purchases</div><div class="stat-value">${B.successCount}</div></div>
+      <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value">${kes(B.revenueKes)}</div></div>
+      <div class="stat-card"><div class="stat-label">Coins sold</div><div class="stat-value">${B.coinsSold.toLocaleString()}</div></div>
+    </div>
+    <div class="two-col">
+      <div class="panel"><h2>People</h2>
+        <div class="kv"><span>Members (total)</span><b>${P.totalMembers}</b></div>
+        <div class="kv"><span>Creators (total)</span><b>${P.totalCreators}</b></div>
+        <div class="kv"><span>Deactivated now</span><b>${P.deactivated}</b></div>
+        <div class="kv"><span>Deleted in period</span><b>${P.deletedInWindow}</b></div>
+      </div>
+      <div class="panel"><h2>Creator verification</h2>
+        <div class="kv"><span>Waiting for review</span><b>${V.pending}</b></div>
+        <div class="kv"><span>Approved / rejected</span><b>${V.approved} / ${V.rejected}</b></div>
+        <div class="kv"><span>Not submitted yet</span><b>${V.notSubmitted}</b></div>
+        <div class="kv"><span>This period: submitted · approved</span><b>${V.submittedInPeriod} · ${V.approvedInPeriod}</b></div>
+      </div>
+      <div class="panel"><h2>Purchases by channel</h2>
+        ${bars(B.byChannel.map((c) => ({ name: c.channel, v: c.revenueKes, c: c.count })), "v", (r) => `${kes(r.v)} · ${r.c}`)}
+        <div class="muted" style="margin-top:10px">${B.buyers} buyer${B.buyers === 1 ? "" : "s"} · ${B.failedCount} failed · ${B.pendingCount} still pending</div>
+      </div>
+      <div class="panel"><h2>Purchases by package</h2>
+        ${bars(B.byPackage.map((c) => ({ name: c.label, v: c.revenueKes, c: c.count })), "v", (r) => `${kes(r.v)} · ${r.c}`)}
+      </div>
+      <div class="panel"><h2>Payouts</h2>
+        <div class="kv"><span>Creator payouts waiting</span><b>${Y.pendingCount} · ${kes(Y.pendingKes)}</b></div>
+        <div class="kv"><span>Affiliate payouts waiting</span><b>${Y.affiliatePendingCount} · ${kes(Y.affiliatePendingKes)}</b></div>
+        <div class="kv"><span>Paid this period</span><b>${Y.paidCount} · ${kes(Y.paidKes)}</b></div>
+      </div>
+      <div class="panel"><h2>Activity &amp; safety</h2>
+        <div class="kv"><span>Messages</span><b>${A.messages.toLocaleString()}</b></div>
+        <div class="kv"><span>Calls · minutes</span><b>${A.calls} · ${A.callMinutes}</b></div>
+        <div class="kv"><span>Rooms started · posts · gifts</span><b>${A.roomsStarted} · ${A.posts} · ${A.gifts}</b></div>
+        <div class="kv"><span>Reports waiting · new · blocks</span><b>${M.reportsPending} · ${M.reportsInPeriod} · ${M.blocksInPeriod}</b></div>
+      </div>
+    </div>`;
+}
+async function fillDashBiz(range = "24h") {
+  const el = document.getElementById("dash-biz");
+  if (!el) return;
+  try {
+    const d = await api("/admin/business-report?range=" + range);
+    el.innerHTML = `<h1 style="font-size:20px">Business, ${esc(d.label)}</h1>${rangeChips(range, "fillDashBiz")}${reportHtml(d.report)}<div style="height:8px"></div>`;
+  } catch (err) { el.innerHTML = `<div class="error-text">${esc(err.message)}</div>`; }
+}
+window.fillDashBiz = fillDashBiz;
+
+async function loadBizReport(range = "24h") {
+  const el = document.getElementById("view-bizreport");
+  if (!el.dataset.ready) el.innerHTML = `<h1>Business report</h1><div class="loading">Loading...</div>`;
+  try {
+    const [d, sch] = await Promise.all([api("/admin/business-report?range=" + range), api("/admin/report-schedule")]);
+    el.dataset.ready = "1";
+    el.innerHTML = `
+      <h1>Business report</h1>
+      <div class="panel">
+        <h2>Telegram schedule</h2>
+        <p class="muted" style="margin:0 0 10px">The same report is sent to your Telegram admin chat automatically. Times are Nairobi time. You can also change this from the bot with /schedule.</p>
+        <div class="chips" id="sched-chips">${sch.options.map((o) => `<button class="chip ${o.key === sch.current ? "active" : ""}" onclick="setSched('${o.key}')">${esc(o.label)}</button>`).join("")}</div>
+        <button class="btn-sm btn-neutral" onclick="sendReportNow('${range}')">Send this report to Telegram now</button>
+      </div>
+      <h1 style="font-size:20px">${esc(d.label)}</h1>
+      ${rangeChips(range, "loadBizReport")}
+      ${reportHtml(d.report)}`;
+  } catch (err) { el.innerHTML = `<h1>Business report</h1><div class="error-text">${esc(err.message)}</div>`; }
+}
+window.loadBizReport = loadBizReport;
+window.setSched = async (key) => {
+  try { await api("/admin/report-schedule", { method: "PUT", body: JSON.stringify({ key }) }); toast("Schedule saved"); loadBizReport("24h"); }
+  catch (err) { toast(err.message); }
+};
+window.sendReportNow = async (range) => {
+  try { await api("/admin/business-report/send", { method: "POST", body: JSON.stringify({ range }) }); toast("Sent to Telegram"); }
+  catch (err) { toast(err.message); }
+};
+
+// ---- People directory ----
+const dirState = { filter: "all", page: 1, q: "" };
+const DIR_FILTERS = [["all", "Everyone"], ["members", "Members"], ["creators", "Creators"], ["new", "New (7 days)"], ["pending", "Awaiting verification"], ["deactivated", "Deactivated"], ["deleted", "Deleted"]];
 async function loadUsers() {
   const el = document.getElementById("view-users");
-  el.innerHTML = `<h1>Users</h1><div class="loading">Loading...</div>`;
+  const chips = `<div class="chips">${DIR_FILTERS.map(([k, l]) => `<button class="chip ${!dirState.q && k === dirState.filter ? "active" : ""}" onclick="dirFilter('${k}')">${l}</button>`).join("")}</div>`;
+  el.innerHTML = `<h1>People</h1>${chips}
+    <div class="searchbar"><input type="text" id="dir-q" placeholder="Search name, @handle, email or ID" value="${esc(dirState.q)}"><button class="btn-sm btn-neutral" onclick="dirSearch()">Search</button></div>
+    <div id="dir-body"><div class="loading">Loading...</div></div>`;
+  document.getElementById("dir-q").addEventListener("keydown", (e) => { if (e.key === "Enter") dirSearch(); });
   try {
-    const users = await api("/admin/users?limit=100");
-    if (!users.length) { el.innerHTML = `<h1>Users</h1><div class="empty">No users yet.</div>`; return; }
-    el.innerHTML = `<h1>Users</h1><table>
-      <thead><tr><th>Email</th><th>Role</th><th>Active</th><th>Joined</th></tr></thead>
-      <tbody>${users.map(u => `<tr><td>${u.email}</td><td>${u.role}</td><td>${u.isActive ? "Yes" : "No"}</td><td>${fmtDate(u.createdAt)}</td></tr>`).join("")}</tbody>
-    </table>`;
-  } catch (err) {
-    el.innerHTML = `<h1>Users</h1><div class="error-text">${err.message}</div>`;
-  }
+    const qs = dirState.q ? "q=" + encodeURIComponent(dirState.q) : `filter=${dirState.filter}&page=${dirState.page}`;
+    const d = await api("/admin/directory?" + qs);
+    const body = document.getElementById("dir-body");
+    if (!d.rows.length) { body.innerHTML = `<div class="empty">No one matches.</div>`; return; }
+    body.innerHTML = `<table><thead><tr><th>Person</th><th>Type</th><th>Verification</th><th>Country</th><th>Joined</th><th>Status</th></tr></thead><tbody>
+      ${d.rows.map((u) => `<tr class="rowlink" onclick="openPerson('${u.id}')">
+        <td><b>${esc(u.username ? "@" + u.username : u.name || "—")}</b><br><span class="muted">${esc(u.email)}</span></td>
+        <td><span class="pill pill-${u.role}">${u.role}</span></td>
+        <td>${u.role === "creator" ? pillHtml(u.verification === "unsubmitted" ? "pending" : u.verification).replace(">pending<", u.verification === "unsubmitted" ? ">not submitted<" : ">pending<") : "—"}</td>
+        <td>${esc(u.country || "—")}</td><td>${fmtDate(u.createdAt)}</td>
+        <td>${u.deleted ? `<span class="pill pill-off">deleted</span>` : u.isActive ? `<span class="pill pill-approved">active</span>` : `<span class="pill pill-off">deactivated</span>`}</td>
+      </tr>`).join("")}</tbody></table>
+      <div class="pager"><span class="muted">${d.total} total</span>
+        ${dirState.q ? "" : `<button class="btn-sm btn-neutral" ${d.page <= 1 ? "disabled" : ""} onclick="dirPage(-1)">◀ Prev</button><span class="muted">Page ${d.page} of ${d.pages}</span><button class="btn-sm btn-neutral" ${d.page >= d.pages ? "disabled" : ""} onclick="dirPage(1)">Next ▶</button>`}
+      </div>`;
+  } catch (err) { document.getElementById("dir-body").innerHTML = `<div class="error-text">${esc(err.message)}</div>`; }
 }
+window.dirFilter = (k) => { dirState.filter = k; dirState.page = 1; dirState.q = ""; loadUsers(); };
+window.dirPage = (d) => { dirState.page = Math.max(1, dirState.page + d); loadUsers(); };
+window.dirSearch = () => { dirState.q = document.getElementById("dir-q").value.trim(); dirState.page = 1; loadUsers(); };
+
+window.openPerson = async (id) => {
+  closePerson();
+  const back = document.createElement("div");
+  back.className = "drawer-back"; back.id = "drawer-back"; back.onclick = closePerson;
+  const dr = document.createElement("aside");
+  dr.className = "drawer"; dr.id = "drawer"; dr.innerHTML = `<div class="loading">Loading...</div>`;
+  document.body.append(back, dr);
+  try {
+    const u = await api("/admin/directory/" + id);
+    dr.innerHTML = `
+      <button class="btn-sm btn-neutral" onclick="closePerson()" style="float:right">Close</button>
+      <h3>${esc(u.username ? "@" + u.username : u.name || "No handle")}</h3>
+      <div class="muted" style="margin-bottom:12px">${esc(u.name || "")} ${u.name ? "·" : ""} ${esc(u.email)}</div>
+      <div class="chips"><span class="pill pill-${u.role}">${u.role}</span>
+        ${u.deleted ? `<span class="pill pill-off">deleted${u.purged ? " · anonymized" : ""}</span>` : u.isActive ? `<span class="pill pill-approved">active</span>` : `<span class="pill pill-off">deactivated</span>`}
+        ${u.role === "creator" ? `<span class="pill pill-pending">verification: ${esc(u.verification)}</span>` : ""}</div>
+      <div class="panel">
+        <div class="kv"><span>Joined</span><b>${fmtDate(u.createdAt)}</b></div>
+        <div class="kv"><span>Country</span><b>${esc(u.country || "—")}</b></div>
+        <div class="kv"><span>Coins in wallet</span><b>${u.walletCoins.toLocaleString()}</b></div>
+        <div class="kv"><span>Purchases</span><b>${u.purchases.count} · ${kes(u.purchases.kes)}</b></div>
+        <div class="kv"><span>Paid out</span><b>${u.paidOut.count} · ${kes(u.paidOut.kes)}</b></div>
+        <div class="kv"><span>Messages sent</span><b>${u.messagesSent.toLocaleString()}</b></div>
+        <div class="kv"><span>Referrals · referred by</span><b>${u.referrals} · ${esc(u.referredBy ? "@" + u.referredBy : "—")}</b></div>
+        <div class="kv"><span>Reports against</span><b>${u.reportsAgainst}</b></div>
+        <div class="kv"><span>Heat score</span><b>${u.heatScore}</b></div>
+      </div>
+      <div class="panel"><h2>Recent payments</h2>
+        ${u.recentPayments.length ? u.recentPayments.map((p) => `<div class="kv"><span>${fmtDate(p.createdAt)} · ${esc(p.status)}</span><b>${kes(p.amountKes)}</b></div>`).join("") : `<div class="muted">None.</div>`}
+      </div>
+      ${u.deleted ? "" : `<button class="btn-sm ${u.isActive ? "btn-reject" : "btn-approve"}" onclick="togglePerson('${u.id}', ${!u.isActive})" style="padding:9px 16px">${u.isActive ? "Deactivate account" : "Reactivate account"}</button>`}`;
+  } catch (err) { dr.innerHTML = `<button class="btn-sm btn-neutral" onclick="closePerson()">Close</button><div class="error-text">${esc(err.message)}</div>`; }
+};
+window.closePerson = () => { document.getElementById("drawer")?.remove(); document.getElementById("drawer-back")?.remove(); };
+window.togglePerson = async (id, active) => {
+  if (!active && !confirm("Deactivate this account? They will be signed out of using Dosho until reactivated.")) return;
+  try { await api(`/admin/directory/${id}/active`, { method: "POST", body: JSON.stringify({ active }) }); toast(active ? "Reactivated" : "Deactivated"); openPerson(id); loadUsers(); }
+  catch (err) { toast(err.message); }
+};
 
 // ---- Verifications ----
 async function loadVerifications(status) {
