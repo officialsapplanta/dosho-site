@@ -196,6 +196,15 @@
     .btn { transition: none; }
   }
 </style>
+<script>
+  // Drop any old service worker left on the main page by an earlier version of the site
+  // (the web app under /app/ has its own and is left alone).
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function (list) {
+      list.forEach(function (r) { if (r.scope === location.origin + '/') r.unregister(); });
+    }).catch(function () {});
+  }
+</script>
 </head>
 <body>
 <div class="bloom" aria-hidden="true"></div>
