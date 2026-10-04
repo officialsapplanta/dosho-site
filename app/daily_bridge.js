@@ -26,6 +26,7 @@
       var frame = window.Daily.createFrame(container, {
         iframeStyle: { width: '100%', height: '100%', border: '0', background: '#0D0710' },
         showLeaveButton: opts.showLeave !== false,
+        showParticipantsBar: false,
         showFullscreenButton: false,
         theme: {
           colors: {
