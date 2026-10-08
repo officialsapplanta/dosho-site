@@ -679,7 +679,7 @@ function bars(rows, valueKey, fmt) {
   return rows.map((r) => `<div class="bar-row"><span>${esc(r.name)}</span><div class="bar"><i style="width:${Math.round((r[valueKey] / max) * 100)}%"></i></div><b>${fmt(r)}</b></div>`).join("");
 }
 function reportHtml(r) {
-  const P = r.people, V = r.creatorVerification, B = r.purchases, Y = r.payouts, A = r.activity, M = r.moderation;
+  const P = r.people, V = r.creatorVerification, B = r.purchases, Y = r.payouts, A = r.activity, M = r.moderation, F = r.features;
   return `
     <div class="stat-grid">
       <div class="stat-card"><div class="stat-label">New members</div><div class="stat-value">${P.newMembers}</div></div>
@@ -712,6 +712,14 @@ function reportHtml(r) {
         <div class="kv"><span>Creator payouts waiting</span><b>${Y.pendingCount} · ${kes(Y.pendingKes)}</b></div>
         <div class="kv"><span>Affiliate payouts waiting</span><b>${Y.affiliatePendingCount} · ${kes(Y.affiliatePendingKes)}</b></div>
         <div class="kv"><span>Paid this period</span><b>${Y.paidCount} · ${kes(Y.paidKes)}</b></div>
+      </div>
+      <div class="panel"><h2>Dosho Play &amp; features</h2>
+        <div class="kv"><span>Players active · check-ins</span><b>${F.playersActive} · ${F.checkIns}</b></div>
+        <div class="kv"><span>Quests claimed · duels · wheel spins</span><b>${F.questsClaimed} · ${F.duelsPlayed} · ${F.wheelSpins}</b></div>
+        <div class="kv"><span>Arcade purchases · XP given</span><b>${F.shopPurchases} · ${F.xpGranted.toLocaleString()}</b></div>
+        <div class="kv"><span>Messages opened</span><b>${F.messagesSent ? Math.round(F.messagesOpened / F.messagesSent * 100) : 0}% of ${F.messagesSent}</b></div>
+        <div class="kv"><span>Warnings sent · evidence sealed · blocked</span><b>${F.warningsSent} · ${F.evidenceSaved} · ${F.flagsBlocked}</b></div>
+        ${F.games.length ? F.games.map((g) => `<div class="kv"><span>${esc(g.game)} (${esc(g.mode)}) · ${g.rounds} rounds</span><b>house ${(g.staked - g.paid).toLocaleString()}</b></div>`).join("") : '<div class="muted">No game rounds yet.</div>'}
       </div>
       <div class="panel"><h2>Activity &amp; safety</h2>
         <div class="kv"><span>Messages</span><b>${A.messages.toLocaleString()}</b></div>
