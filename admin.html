@@ -769,6 +769,14 @@ window.sendReportNow = async (range) => {
 };
 
 // ---- People directory ----
+function avatarHtml(u, size) {
+  const letter = esc(((u.username || u.name || u.email || "?").trim()[0] || "?").toUpperCase());
+  const base = `width:${size}px;height:${size}px;border-radius:50%;flex:none;`;
+  const fallback = `<span style="${base}display:inline-flex;align-items:center;justify-content:center;background:var(--surface-2,#3a2a52);color:#fff;font-weight:800;font-size:${Math.round(size / 2.4)}px;">${letter}</span>`;
+  if (!u.photoUrl) return fallback;
+  return `<span style="position:relative;display:inline-flex;${base}"><img src="${esc(u.photoUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer" style="${base}object-fit:cover;" onerror="this.parentNode.outerHTML=this.dataset.fb" data-fb="${esc(fallback)}"></span>`;
+}
+
 const dirState = { filter: "all", page: 1, q: "" };
 const DIR_FILTERS = [["all", "Everyone"], ["members", "Members"], ["creators", "Creators"], ["new", "New (7 days)"], ["pending", "Awaiting verification"], ["deactivated", "Deactivated"], ["deleted", "Deleted"]];
 async function loadUsers() {
@@ -785,7 +793,7 @@ async function loadUsers() {
     if (!d.rows.length) { body.innerHTML = `<div class="empty">No one matches.</div>`; return; }
     body.innerHTML = `<table><thead><tr><th>Person</th><th>Type</th><th>Verification</th><th>Country</th><th>Joined</th><th>Status</th></tr></thead><tbody>
       ${d.rows.map((u) => `<tr class="rowlink" onclick="openPerson('${u.id}')">
-        <td><b>${esc(u.username ? "@" + u.username : u.name || "—")}</b><br><span class="muted">${esc(u.email)}</span></td>
+        <td><div style="display:flex;align-items:center;gap:10px">${avatarHtml(u, 36)}<div><b>${esc(u.username ? "@" + u.username : u.name || "—")}</b><br><span class="muted">${esc(u.email)}</span></div></div></td>
         <td><span class="pill pill-${u.role}">${u.role}</span></td>
         <td>${u.role === "creator" ? pillHtml(u.verification === "unsubmitted" ? "pending" : u.verification).replace(">pending<", u.verification === "unsubmitted" ? ">not submitted<" : ">pending<") : "—"}</td>
         <td>${esc(u.country || "—")}</td><td>${fmtDate(u.createdAt)}</td>
@@ -811,7 +819,8 @@ window.openPerson = async (id) => {
     const u = await api("/admin/directory/" + id);
     dr.innerHTML = `
       <button class="btn-sm btn-neutral" onclick="closePerson()" style="float:right">Close</button>
-      <h3>${esc(u.username ? "@" + u.username : u.name || "No handle")}</h3>
+      <div style="display:flex;justify-content:center;margin:6px 0 10px">${avatarHtml(u, 112)}</div>
+      <h3 style="text-align:center">${esc(u.username ? "@" + u.username : u.name || "No handle")}</h3>
       <div class="muted" style="margin-bottom:12px">${esc(u.name || "")} ${u.name ? "·" : ""} ${esc(u.email)}</div>
       <div class="chips"><span class="pill pill-${u.role}">${u.role}</span>
         ${u.deleted ? `<span class="pill pill-off">deleted${u.purged ? " · anonymized" : ""}</span>` : u.isActive ? `<span class="pill pill-approved">active</span>` : `<span class="pill pill-off">deactivated</span>`}
@@ -827,6 +836,7 @@ window.openPerson = async (id) => {
         <div class="kv"><span>Reports against</span><b>${u.reportsAgainst}</b></div>
         <div class="kv"><span>Heat score</span><b>${u.heatScore}</b></div>
       </div>
+      ${u.gallery && u.gallery.filter(Boolean).length ? `<div class="panel"><h2>Gallery</h2><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">${u.gallery.filter(Boolean).map((g) => `<a href="${esc(g)}" target="_blank" rel="noopener"><img src="${esc(g)}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px"></a>`).join("")}</div></div>` : ""}
       <div class="panel"><h2>Recent payments</h2>
         ${u.recentPayments.length ? u.recentPayments.map((p) => `<div class="kv"><span>${fmtDate(p.createdAt)} · ${esc(p.status)}</span><b>${kes(p.amountKes)}</b></div>`).join("") : `<div class="muted">None.</div>`}
       </div>
