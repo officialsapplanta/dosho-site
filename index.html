@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0D0710">
-<title>Dosho: video calls, live rooms and chat where creators earn</title>
-<meta name="description" content="Dosho is a free social app for adults (18+) with video calls, live rooms you can just listen to, and verified creators who earn real money. Join free on Android or the web.">
+<title>Dosho: live streams, reels and gifts</title>
+<meta name="description" content="Dosho is a free social app for adults (18+): watch live streams, battle in PK, post reels with music, and send gifts to the hosts you love. Join free on Android or the web.">
 <link rel="canonical" href="https://dosho.site/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dosho.site">
-<meta property="og:title" content="Dosho: Grow closer, on purpose.">
-<meta property="og:description" content="Video calls, live rooms you can just listen to, and creators who earn. 18+ and ID-verified.">
+<meta property="og:title" content="Dosho: live streams, reels and gifts">
+<meta property="og:description" content="Watch lives, battle in PK, post reels with music and send gifts. Free to join, 18+.">
 <meta property="og:image" content="https://dosho.site/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Dosho: Grow closer, on purpose.">
-<meta name="twitter:description" content="Video calls, live rooms you can just listen to, and creators who earn. 18+ and ID-verified.">
+<meta name="twitter:title" content="Dosho: live streams, reels and gifts">
+<meta name="twitter:description" content="Watch lives, battle in PK, post reels with music and send gifts. Free to join, 18+.">
 <meta name="twitter:image" content="https://dosho.site/og-image.jpg">
 <script type="application/ld+json">
 {
@@ -44,7 +44,7 @@
       "name": "Dosho",
       "operatingSystem": "ANDROID",
       "applicationCategory": "SocialNetworkingApplication",
-      "description": "Video calls, live rooms and chat where verified creators earn. 18+ and ID-verified. Free to join.",
+      "description": "Live streams, PK battles, reels with music and gifts. Free to join, 18+.",
       "downloadUrl": "https://play.google.com/store/apps/details?id=app.dosho.android",
       "installUrl": "https://play.google.com/store/apps/details?id=app.dosho.android",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KES" },
@@ -56,7 +56,7 @@
 <link rel="icon" type="image/png" href="favicon.png?v=2">
 <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preload" as="image" href="screens/discover.jpg">
+<link rel="preload" as="image" href="screens/app-live.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
@@ -71,10 +71,10 @@
     --bone: #FAF2F6;
     --muted: #B29CAE;
     --dim: #80687B;
-    --petal: #FFC5DD;
-    --bloom: #FF6FA8;
-    --rose: #E84393;
-    --gradient: linear-gradient(135deg, #FFC5DD 0%, #FF6FA8 55%, #E84393 100%);
+    --petal: #F3B8FF;
+    --bloom: #E24BD1;
+    --rose: #B13BE8;
+    --gradient: linear-gradient(135deg, #FF3FA4 0%, #C23CD8 55%, #6F3BF0 100%);
     --display: "Fraunces", Georgia, "Times New Roman", serif;
     --sans: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
@@ -100,7 +100,7 @@
   .bloom {
     position: absolute; inset: 0 0 auto 0; height: 46rem; pointer-events: none; z-index: 0;
     background:
-      radial-gradient(40rem 28rem at 78% 22%, rgba(232, 67, 147, 0.22), transparent 70%),
+      radial-gradient(40rem 28rem at 78% 22%, rgba(194, 60, 216, 0.22), transparent 70%),
       radial-gradient(30rem 22rem at 12% 8%, rgba(255, 197, 221, 0.07), transparent 70%);
   }
 
@@ -123,8 +123,8 @@
     font-weight: 600; font-size: 0.98rem; padding: 0.85rem 1.5rem; border-radius: 999px;
     border: 1px solid transparent; transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .btn-primary { background: var(--gradient); color: #1a0a14; box-shadow: 0 8px 28px rgba(232, 67, 147, 0.28); }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 34px rgba(232, 67, 147, 0.38); }
+  .btn-primary { background: var(--gradient); color: #fff; box-shadow: 0 8px 28px rgba(194, 60, 216, 0.28); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 34px rgba(194, 60, 216, 0.38); }
   .btn-ghost { border-color: var(--line); color: var(--bone); background: rgba(28, 17, 34, 0.6); }
   .btn-ghost:hover { border-color: var(--bloom); }
   .btn-sm { padding: 0.55rem 1.05rem; font-size: 0.88rem; }
@@ -201,7 +201,7 @@
   .earn { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
   .example {
     margin-top: 1.25rem; padding: 0.85rem 1rem; border-radius: 14px; font-size: 0.88rem; font-weight: 500;
-    color: var(--petal); background: rgba(255, 111, 168, 0.08); border: 1px solid var(--line);
+    color: var(--petal); background: rgba(226, 75, 209, 0.10); border: 1px solid var(--line);
   }
   @media (max-width: 44rem) { .earn { grid-template-columns: 1fr; } }
 
@@ -214,7 +214,7 @@
 
   .cta {
     text-align: center; padding: clamp(3rem, 7vw, 5rem) 1.5rem; border-radius: 28px; border: 1px solid var(--line);
-    background: radial-gradient(30rem 16rem at 50% 0%, rgba(232, 67, 147, 0.2), transparent 70%), var(--panel);
+    background: radial-gradient(30rem 16rem at 50% 0%, rgba(194, 60, 216, 0.2), transparent 70%), var(--panel);
   }
   .cta h2 { margin-bottom: 0.9rem; }
   .cta p { color: var(--muted); margin: 0 auto 2rem; max-width: 30rem; }
@@ -260,9 +260,9 @@
   <div class="wrap">
     <div class="hero">
       <div>
-        <p class="eyebrow">Live video, on purpose</p>
-        <h1>Grow closer, <em>on purpose.</em></h1>
-        <p class="lede">Video calls, chat, and live rooms you can just listen to. One mission a day instead of an endless feed, and creators who are ID-verified and paid for their time.</p>
+        <p class="eyebrow">Live. Watch. Create.</p>
+        <h1>Live video, <em>live together.</em></h1>
+        <p class="lede">Watch live streams from around the world, cheer on PK battles, post reels with music, and send gifts to the hosts you love. Free to join, 18 and over.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
             <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
@@ -272,75 +272,76 @@
         </div>
       </div>
       <div class="phones" aria-hidden="true">
-        <img class="shot back" src="screens/rooms.jpg" alt="" width="640" height="1105">
-        <img class="shot front" src="screens/discover.jpg" alt="" width="640" height="1105" fetchpriority="high">
+        <img class="shot back" src="screens/app-reels.jpg" alt="" width="640" height="1391">
+        <img class="shot front" src="screens/app-live.jpg" alt="" width="640" height="1391" fetchpriority="high">
       </div>
     </div>
 
     <dl class="facts">
-      <div class="fact"><dt>Access</dt><dd>18+, ID-verified creators</dd></div>
-      <div class="fact"><dt>Platform</dt><dd>Android now, iOS coming soon</dd></div>
-      <div class="fact"><dt>Earn</dt><dd>Per minute, from gifts, or as an affiliate</dd></div>
+      <div class="fact"><dt>Access</dt><dd>Free to join, 18 and over</dd></div>
+      <div class="fact"><dt>Platform</dt><dd>Android and web now, iPhone coming soon</dd></div>
+      <div class="fact"><dt>Hosts</dt><dd>Earn from gifts, or as an affiliate</dd></div>
     </dl>
 
     <section id="screens" aria-labelledby="screens-h">
       <div class="head">
         <p class="eyebrow">Inside the app</p>
-        <h2 id="screens-h">Quiet, warm, <em>unhurried.</em></h2>
-        <p>A look at how Dosho feels, from the first screen to a live call.</p>
+        <h2 id="screens-h">Everything in <em>one app.</em></h2>
+        <p>A look at Dosho, from the first live to your own reel.</p>
       </div>
       <div class="gallery" tabindex="0" aria-label="App screens, scroll sideways">
-        <figure><img class="shot" src="screens/welcome.jpg" alt="Dosho welcome screen with three promises" loading="lazy" width="640" height="1105"><figcaption><b>Welcome</b>Three promises, one tap in</figcaption></figure>
-        <figure><img class="shot" src="screens/discover.jpg" alt="Discover feed showing a verified creator card" loading="lazy" width="640" height="1105"><figcaption><b>Discover</b>People, with the reason why</figcaption></figure>
-        <figure><img class="shot" src="screens/rooms.jpg" alt="List of live rooms" loading="lazy" width="640" height="1105"><figcaption><b>Rooms</b>Listen in first, speak when ready</figcaption></figure>
-        <figure><img class="shot" src="screens/chat.jpg" alt="A one-to-one chat" loading="lazy" width="640" height="1102"><figcaption><b>Chat</b>Conversations that feel like yours</figcaption></figure>
-        <figure><img class="shot" src="screens/other-profile.jpg" alt="Another person's profile" loading="lazy" width="640" height="1102"><figcaption><b>Profiles</b>Photos, videos and words</figcaption></figure>
-        <figure><img class="shot" src="screens/call-video.jpg" alt="A live video call" loading="lazy" width="640" height="1105"><figcaption><b>Video calls</b>Face to face, per minute</figcaption></figure>
-        <figure><img class="shot" src="screens/become-creator.jpg" alt="Become a creator screen" loading="lazy" width="640" height="1105"><figcaption><b>Become a creator</b>Verify once, earn from your time</figcaption></figure>
+        <figure><img class="shot" src="screens/app-live.jpg" alt="Explore screen with live hosts" loading="lazy" width="640" height="1391"><figcaption><b>Explore</b>Hosts live right now</figcaption></figure>
+        <figure><img class="shot" src="screens/app-party.jpg" alt="List of live rooms" loading="lazy" width="640" height="1391"><figcaption><b>Live rooms</b>Join in and say hello</figcaption></figure>
+        <figure><img class="shot" src="screens/app-reels.jpg" alt="A reel playing full screen" loading="lazy" width="640" height="1391"><figcaption><b>Reels</b>Short videos with music</figcaption></figure>
+        <figure><img class="shot" src="screens/app-room.jpg" alt="Inside a live room with chat" loading="lazy" width="640" height="1391"><figcaption><b>Live chat</b>Chat, gifts and host levels</figcaption></figure>
+        <figure><img class="shot" src="screens/app-level.jpg" alt="Level, daily check-in and quests" loading="lazy" width="640" height="1391"><figcaption><b>Levels</b>Daily check-in and quests</figcaption></figure>
+        <figure><img class="shot" src="screens/app-store.jpg" alt="Store with avatar frames" loading="lazy" width="640" height="1391"><figcaption><b>Store</b>Frames, rides and themes</figcaption></figure>
+        <figure><img class="shot" src="screens/app-host.jpg" alt="Host center with tasks and contests" loading="lazy" width="640" height="1391"><figcaption><b>Host center</b>Tasks, levels and contests</figcaption></figure>
+        <figure><img class="shot" src="screens/app-ranking.jpg" alt="Weekly ranking" loading="lazy" width="640" height="1391"><figcaption><b>Ranking</b>Weekly and season boards</figcaption></figure>
       </div>
     </section>
 
     <section aria-labelledby="how-h">
       <div class="head">
         <p class="eyebrow">How it works</p>
-        <h2 id="how-h">Discover, connect, <em>stay.</em></h2>
+        <h2 id="how-h">Watch, create, <em>connect.</em></h2>
       </div>
       <div class="pillars">
         <article class="card">
-          <span class="tag">Discover</span>
-          <h3>Meet people for a reason</h3>
-          <p>Browse verified creators, each with their own message and video-call rate, and see why someone was suggested to you.</p>
+          <span class="tag">Live</span>
+          <h3>Lives and PK battles</h3>
+          <p>Watch hosts from around the world, join the live chat, and cheer for your favourite in a PK battle. Go live yourself in a few taps, with a beauty filter.</p>
         </article>
         <article class="card">
-          <span class="tag">Rooms</span>
-          <h3>Rooms you can just listen to</h3>
-          <p>Drop into a live room already in progress. Listen first, and raise your hand to speak only when you feel like it.</p>
+          <span class="tag">Reels</span>
+          <h3>Short videos with music</h3>
+          <p>Scroll reels picked for you, search hashtags, and make your own: record in the app, trim, add a look, text and music, or make a duet or a stitch.</p>
         </article>
         <article class="card">
-          <span class="tag">Calls &amp; chat</span>
-          <h3>Pay for what you use</h3>
-          <p>Message or video call using coins you top up in advance. No subscriptions, and no surprises on what a minute costs.</p>
+          <span class="tag">Gifts</span>
+          <h3>Show some love</h3>
+          <p>Send animated gifts that light up the whole screen. Coins are optional and you only buy what you want. Level up, check in daily and collect avatar frames.</p>
         </article>
       </div>
     </section>
 
     <section id="earn" aria-labelledby="earn-h">
       <div class="head">
-        <p class="eyebrow">Earn on Dosho</p>
+        <p class="eyebrow">For hosts</p>
         <h2 id="earn-h">Two ways to <em>earn.</em></h2>
       </div>
       <div class="earn">
         <article class="card">
-          <span class="tag">Creators</span>
-          <h3>Get paid for your time</h3>
-          <p>Any verified user can be a creator. Set your own rate per message and per minute of video, host rooms, and receive gifts. Earnings are paid out to the payout method you add in the app.</p>
-          <div class="example">Example: 100 coins a minute &times; a 10 minute call = 1,000 coins earned</div>
+          <span class="tag">Hosts</span>
+          <h3>Earn from the gifts you get</h3>
+          <p>Go live, grow your audience and earn from the gifts viewers send you. Level up as a host with daily tasks and contests, and withdraw your earnings to M-Pesa or PayPal.</p>
+          <div class="example">Only earned coins can be withdrawn. Coins you buy stay in the app.</div>
         </article>
         <article class="card">
           <span class="tag">Affiliate</span>
           <h3>Share your code, earn for life</h3>
-          <p>Everyone is automatically an affiliate. Your username is your referral code, and you earn 5% of whatever the people who join through you spend or earn. It's not a one-time bonus.</p>
-          <div class="example">Example: they spend 1,000 coins &rarr; you earn 50, every time</div>
+          <p>Everyone is automatically an affiliate. Your username is your referral code, and you earn 5% of what the people who join through you earn. It's not a one-time bonus.</p>
+          <div class="example">Share a live, a reel or your profile with one tap</div>
         </article>
       </div>
     </section>
@@ -351,10 +352,10 @@
         <h2 id="safety-h">Built on <em>trust.</em></h2>
       </div>
       <div class="trust">
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Real identity verification</h3><p>Creators confirm their age and identity with a government ID and a live selfie before they can earn.</p></article>
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>18+ only</h3><p>Every account confirms it meets our age requirement at sign-up.</p></article>
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Server-side wallet</h3><p>Balances and charges are calculated on our servers, not your device, so a balance can't be spoofed or spent twice.</p></article>
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Screenshots alert both sides</h3><p>Private chats and rooms tell everyone when someone tries to capture the screen. <a href="/private-by-design.html" style="color:var(--petal)">See everything we do</a>.</p></article>
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>18 and over only</h3><p>Every account confirms it meets our age requirement at sign-up.</p></article>
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Report and block</h3><p>Every profile and every live has report and block, and our team reviews reports.</p></article>
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Moderated lives</h3><p>Hosts and their moderators can mute, remove or ban people in a live, and chat is checked for abuse.</p></article>
+        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Your wallet is protected</h3><p>Balances and charges are calculated on our servers, not your device. <a href="/private-by-design.html" style="color:var(--petal)">See everything we do</a>.</p></article>
       </div>
     </section>
 
@@ -362,7 +363,7 @@
       <div class="cta">
         <p class="eyebrow">Ready?</p>
         <h2 id="cta-h">Start <em>today.</em></h2>
-        <p>Free to join. You only pay for what you use.</p>
+        <p>Free to join. Coins are optional.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
             <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
