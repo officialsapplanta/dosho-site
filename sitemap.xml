@@ -5,6 +5,7 @@
   <url><loc>https://dosho.site/support.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://dosho.site/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://dosho.site/community-guidelines.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dosho.site/terms.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://dosho.site/child-safety.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://dosho.site/private-by-design.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
 </urlset>
