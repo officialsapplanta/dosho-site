@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0D0710">
-<title>Dosho: live streams, reels and gifts</title>
+<title>Dosho: reels, live PK battles and gifts</title>
 <meta name="description" content="Dosho is a free social app for adults (18+): watch live streams, battle in PK, post reels with music, and send gifts to the hosts you love. Join free on Android or the web.">
 <link rel="canonical" href="https://dosho.site/">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -44,7 +44,7 @@
       "name": "Dosho",
       "operatingSystem": "ANDROID",
       "applicationCategory": "SocialNetworkingApplication",
-      "description": "Live streams, PK battles, reels with music and gifts. Free to join, 18+.",
+      "description": "Reels, live PK battles, chat and gifts. Free to join, 18+.",
       "downloadUrl": "https://play.google.com/store/apps/details?id=app.dosho.android",
       "installUrl": "https://play.google.com/store/apps/details?id=app.dosho.android",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KES" },
@@ -56,184 +56,92 @@
 <link rel="icon" type="image/png" href="favicon.png?v=2">
 <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preload" as="image" href="screens/app-live.jpg">
+<link rel="preload" as="image" href="screens/new-01-home-explore.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
 <style>
-  /* The app's own palette, named the way the design system names it. */
   :root {
-    --dusk: #0D0710;
-    --deep: #150A19;
-    --panel: #1C1122;
-    --panel-2: #241530;
-    --line: #311B36;
-    --bone: #FAF2F6;
-    --muted: #B29CAE;
-    --dim: #80687B;
-    --petal: #F3B8FF;
-    --bloom: #E24BD1;
-    --rose: #B13BE8;
-    --gradient: linear-gradient(135deg, #FF3FA4 0%, #C23CD8 55%, #6F3BF0 100%);
-    --display: "Fraunces", Georgia, "Times New Roman", serif;
-    --sans: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ink-0:#0B0612; --ink-1:#12081B; --ink-2:#1B0E28;
+    --glass: rgba(255,255,255,.06); --glass-2: rgba(255,255,255,.10);
+    --edge: rgba(255,255,255,.12);
+    --bone:#FBF3F8; --muted:#C2A9C4; --dim:#8D7592;
+    --pink:#FF3DBA; --magenta:#D61FC4; --violet:#6A3CF0; --petal:#F3B8FF;
+    --grad: linear-gradient(135deg,#FF3DBA 0%,#D61FC4 45%,#6A3CF0 100%);
+    --display:"Fraunces",Georgia,serif; --sans:"Inter",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   }
-
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; color-scheme: dark; }
-  body {
-    margin: 0;
-    background: var(--dusk);
-    color: var(--bone);
-    font-family: var(--sans);
-    line-height: 1.55;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink-0);color:var(--bone);font:400 1rem/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;
+    background:radial-gradient(60rem 40rem at 85% -5%,rgba(214,31,196,.35),transparent 60%),
+               radial-gradient(50rem 40rem at -10% 30%,rgba(106,60,240,.30),transparent 60%),
+               radial-gradient(40rem 30rem at 60% 100%,rgba(255,61,186,.18),transparent 60%),var(--ink-0)}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{width:min(1120px,100% - 2rem);margin-inline:auto}
+  .notice{background:var(--grad);text-align:center;font-size:.9rem;font-weight:600;padding:.6rem 1rem}
+  .notice a{text-decoration:underline;text-underline-offset:3px}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0}
+  .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+  .brand .mark{width:34px;height:34px}.brand .word{height:22px;width:auto}
+  .nav-links{display:flex;align-items:center;gap:1.6rem;font-size:.92rem;color:var(--muted)}
+  .nav-links a{text-decoration:none}.nav-links a:hover{color:var(--bone)}
+  .btn{display:inline-flex;align-items:center;gap:.6rem;border-radius:999px;font-weight:600;text-decoration:none;padding:.85rem 1.5rem;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:focus-visible,a:focus-visible{outline:2px solid var(--petal);outline-offset:3px}
+  .btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 30px -8px rgba(214,31,196,.6)}
+  .btn-ghost{background:var(--glass);border:1px solid var(--edge);backdrop-filter:blur(14px)}
+  .btn-sm{padding:.55rem 1.1rem;font-size:.9rem}
+  .eyebrow{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--petal);font-weight:600;margin-bottom:1rem}
+  h1,h2{font-family:var(--display);font-weight:300;letter-spacing:-.02em;line-height:1.05;text-wrap:balance}
+  h1{font-size:clamp(2.8rem,6.4vw,5rem)}h2{font-size:clamp(2rem,4vw,3rem)}
+  h1 em,h2 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+  h3{font-size:1.15rem;font-weight:600;margin-bottom:.4rem}
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center;padding:3rem 0 4rem}
+  .lede{color:var(--muted);font-size:1.15rem;max-width:34rem;margin:1.4rem 0 2rem}
+  .actions{display:flex;flex-wrap:wrap;gap:.8rem}
+  .phone{border-radius:34px;padding:8px;background:linear-gradient(160deg,#3a2150,#12081b);border:1px solid var(--edge);box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 0 60px -10px rgba(214,31,196,.35)}
+  .phone img{border-radius:27px;width:100%;height:auto;aspect-ratio:377/818;object-fit:cover}
+  .fan{position:relative;height:620px}
+  .fan .phone{position:absolute;width:250px}
+  .fan .a{left:0;top:70px;transform:rotate(-7deg)}
+  .fan .b{left:50%;transform:translateX(-50%);top:0;z-index:2;width:270px}
+  .fan .c{right:0;top:70px;transform:rotate(7deg)}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:5rem}
+  .fact{background:var(--glass);border:1px solid var(--edge);border-radius:18px;padding:1.1rem 1.3rem;backdrop-filter:blur(14px)}
+  .fact dt{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .fact dd{margin-top:.2rem;font-weight:500}
+  section{margin-bottom:6rem}
+  .head{max-width:40rem;margin-bottom:2.5rem}.head p:last-child{color:var(--muted);margin-top:1rem}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-bottom:4.5rem}
+  .row.flip .shots{order:2}
+  .row p{color:var(--muted);margin:.8rem 0 1.2rem}
+  .row h3{font-size:1.6rem}
+  .row ul{list-style:none;display:grid;gap:.55rem}
+  .row li{padding-left:1.5rem;position:relative;color:var(--bone)}
+  .row li::before{content:"";position:absolute;left:0;top:.62em;width:.6rem;height:.6rem;border-radius:50%;background:var(--grad)}
+  .shots{display:flex;justify-content:center;gap:1rem}
+  .shots .phone{width:min(230px,44%)}
+  .shots .phone:nth-child(2){margin-top:2.5rem}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+  .card{background:var(--glass);border:1px solid var(--edge);border-radius:22px;padding:1.6rem;backdrop-filter:blur(14px)}
+  .card p{color:var(--muted);font-size:.96rem}
+  .tag{display:inline-block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#fff;background:var(--grad);border-radius:999px;padding:.25rem .7rem;margin-bottom:.9rem}
+  .card .note{margin-top:1rem;font-size:.85rem;color:var(--dim);border-top:1px solid var(--edge);padding-top:.8rem}
+  .cta{text-align:center;background:var(--glass);border:1px solid var(--edge);border-radius:32px;padding:4rem 1.5rem;backdrop-filter:blur(16px)}
+  .cta p:not(.eyebrow){color:var(--muted);margin:1rem 0 2rem}.cta .actions{justify-content:center}
+  footer{border-top:1px solid var(--edge);padding:2.5rem 0 3.5rem;color:var(--dim);font-size:.86rem}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem}
+  .links{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}.links a{text-decoration:none;color:var(--muted)}.links a:hover{color:var(--bone)}
+  @media(max-width:860px){
+    .hero,.row{grid-template-columns:1fr}.row.flip .shots{order:0}
+    .fan{height:500px}.fan .phone{width:190px}.fan .b{width:210px}
+    .facts{grid-template-columns:1fr}.hide-sm{display:none}
   }
-  a { color: inherit; }
-  img { max-width: 100%; height: auto; display: block; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--bloom); outline-offset: 3px; border-radius: 6px; }
-
-  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
-
-  /* Ambient bloom behind the hero, like the app's welcome screen. */
-  .bloom {
-    position: absolute; inset: 0 0 auto 0; height: 46rem; pointer-events: none; z-index: 0;
-    background:
-      radial-gradient(40rem 28rem at 78% 22%, rgba(194, 60, 216, 0.22), transparent 70%),
-      radial-gradient(30rem 22rem at 12% 8%, rgba(255, 197, 221, 0.07), transparent 70%);
-  }
-
-  /* ---------- Nav ---------- */
-  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; }
-  .brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
-  .brand { gap: 0.6rem; }
-  /* Transparent PNGs (backdrop knocked out), so they sit directly on the page. */
-  .brand img { width: auto; }
-  .brand .mark { height: 2.4rem; }
-  .brand .word { height: 1.5rem; }
-  .nav-links { display: flex; align-items: center; gap: 1.75rem; font-size: 0.92rem; color: var(--muted); }
-  .nav-links a { text-decoration: none; }
-  .nav-links a:hover { color: var(--bone); }
-  @media (max-width: 40rem) { .nav-links .hide-sm { display: none; } }
-
-  /* ---------- Buttons ---------- */
-  .btn {
-    display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none;
-    font-weight: 600; font-size: 0.98rem; padding: 0.85rem 1.5rem; border-radius: 999px;
-    border: 1px solid transparent; transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  .btn-primary { background: var(--gradient); color: #fff; box-shadow: 0 8px 28px rgba(194, 60, 216, 0.28); }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 34px rgba(194, 60, 216, 0.38); }
-  .btn-ghost { border-color: var(--line); color: var(--bone); background: rgba(28, 17, 34, 0.6); }
-  .btn-ghost:hover { border-color: var(--bloom); }
-  .btn-sm { padding: 0.55rem 1.05rem; font-size: 0.88rem; }
-  .soon {
-    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.92rem; color: var(--dim);
-    border: 1px dashed var(--line); border-radius: 999px; padding: 0.8rem 1.25rem;
-  }
-
-  /* ---------- Hero ---------- */
-  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 3rem; align-items: center; padding: 3rem 0 4rem; }
-  .eyebrow {
-    margin: 0 0 1rem; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--petal);
-  }
-  h1, h2, h3 { font-family: var(--display); font-weight: 300; margin: 0; text-wrap: balance; }
-  h1 { font-size: clamp(2.8rem, 6.4vw, 5rem); line-height: 1.02; letter-spacing: -0.02em; }
-  h1 em, h2 em { font-style: italic; color: var(--petal); }
-  .hero > div:first-child { position: relative; z-index: 3; }
-  .lede { margin: 1.5rem 0 0; max-width: 30rem; color: var(--muted); font-size: 1.1rem; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; align-items: center; }
-
-  .phones { position: relative; height: 38rem; }
-  .shot {
-    position: absolute; display: block; height: auto;
-    /* Soft edges so the screenshots' own backdrop melts into the page. */
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
-    -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
-    mask-composite: intersect;
-  }
-  .phones .front { width: 18rem; left: 50%; top: 0; transform: translateX(-10%); z-index: 2; }
-  .phones .back { width: 15.5rem; left: 50%; top: 3.5rem; transform: translateX(-92%) rotate(-5deg); z-index: 1; opacity: 0.85; }
-
-  @media (max-width: 56rem) {
-    .hero { grid-template-columns: 1fr; padding-top: 1.5rem; }
-    .phones { height: 30rem; overflow: hidden; }
-    .phones .front { width: 14.5rem; transform: translateX(-35%); }
-    .phones .back { width: 12.5rem; top: 3rem; transform: translateX(-88%) rotate(-5deg); }
-  }
-
-  /* ---------- Facts strip ---------- */
-  .facts {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line);
-    border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin: 0 0 5rem;
-  }
-  .fact { background: var(--deep); padding: 1.25rem 1.5rem; }
-  .fact dt { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); margin: 0 0 0.3rem; font-weight: 600; }
-  .fact dd { margin: 0; font-weight: 500; }
-  @media (max-width: 44rem) { .facts { grid-template-columns: 1fr; } }
-
-  /* ---------- Sections ---------- */
-  section { margin: 0 0 6rem; }
-  .head { max-width: 40rem; margin: 0 0 2.25rem; }
-  h2 { font-size: clamp(2rem, 4.2vw, 3rem); line-height: 1.08; letter-spacing: -0.015em; }
-  .head p { color: var(--muted); margin: 1rem 0 0; }
-
-  /* App screens: a real scroll-snap row, no auto-scroll fighting the visitor. */
-  .gallery {
-    display: flex; gap: 1.25rem; overflow-x: auto; padding: 0.5rem 1.5rem 1.5rem; margin: 0 -1.5rem;
-    scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--line) transparent;
-    -webkit-overflow-scrolling: touch;
-  }
-  .gallery figure { flex: 0 0 auto; width: 15.5rem; margin: 0; scroll-snap-align: start; }
-  .gallery .shot { position: static; width: 100%; }
-  .gallery figcaption { margin-top: 0.6rem; font-size: 0.88rem; color: var(--muted); text-align: center; }
-  .gallery figcaption b { display: block; color: var(--bone); font-weight: 600; font-size: 0.95rem; }
-
-  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 1.75rem; }
-  .card h3 { font-size: 1.55rem; margin: 0 0 0.6rem; line-height: 1.15; }
-  .card p { margin: 0; color: var(--muted); font-size: 0.97rem; }
-  .card .tag { display: inline-block; margin-bottom: 1rem; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bloom); font-weight: 600; }
-  @media (max-width: 56rem) { .pillars { grid-template-columns: 1fr; } }
-
-  .earn { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
-  .example {
-    margin-top: 1.25rem; padding: 0.85rem 1rem; border-radius: 14px; font-size: 0.88rem; font-weight: 500;
-    color: var(--petal); background: rgba(226, 75, 209, 0.10); border: 1px solid var(--line);
-  }
-  @media (max-width: 44rem) { .earn { grid-template-columns: 1fr; } }
-
-  .trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-  .trust .card { padding: 1.5rem; border-radius: 18px; background: var(--deep); }
-  .trust h3 { font-family: var(--sans); font-weight: 600; font-size: 1rem; margin: 0.9rem 0 0.4rem; }
-  .trust .dot { display: block; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gradient); }
-  @media (max-width: 64rem) { .trust { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 36rem) { .trust { grid-template-columns: 1fr; } }
-
-  .cta {
-    text-align: center; padding: clamp(3rem, 7vw, 5rem) 1.5rem; border-radius: 28px; border: 1px solid var(--line);
-    background: radial-gradient(30rem 16rem at 50% 0%, rgba(194, 60, 216, 0.2), transparent 70%), var(--panel);
-  }
-  .cta h2 { margin-bottom: 0.9rem; }
-  .cta p { color: var(--muted); margin: 0 auto 2rem; max-width: 30rem; }
-  .cta .hero-actions { justify-content: center; margin-top: 0; }
-
-  footer { border-top: 1px solid var(--line); padding: 2.5rem 0 3.5rem; color: var(--dim); font-size: 0.86rem; }
-  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }
-  .links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
-  .links a { text-decoration: none; color: var(--muted); }
-  .links a:hover { color: var(--bone); }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .btn { transition: none; }
-  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 </style>
 <script>
-  // Drop any old service worker left on the main page by an earlier version of the site
-  // (the web app under /app/ has its own and is left alone).
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function (list) {
       list.forEach(function (r) { if (r.scope === location.origin + '/') r.unregister(); });
@@ -242,142 +150,119 @@
 </script>
 </head>
 <body>
-<div class="bloom" aria-hidden="true"></div>
-
+<div class="notice">Already on Dosho? <a href="https://play.google.com/store/apps/details?id=app.dosho.android">Update the app</a> to keep signing in and chatting.</div>
 <header class="wrap">
   <nav aria-label="Primary">
     <a class="brand" href="/" aria-label="Dosho home"><img class="mark" src="dosho-mark.png" alt="" width="192" height="192"><img class="word" src="dosho-wordmark.png" alt="Dosho" width="480" height="127"></a>
     <div class="nav-links">
-      <a class="hide-sm" href="#screens">Inside the app</a>
+      <a class="hide-sm" href="#inside">Inside the app</a>
       <a class="hide-sm" href="#earn">Earn</a>
       <a class="hide-sm" href="#safety">Safety</a>
       <a class="btn btn-ghost btn-sm" href="https://play.google.com/store/apps/details?id=app.dosho.android">Get the app</a>
     </div>
   </nav>
 </header>
-
-<main>
-  <div class="wrap">
-    <div class="hero">
-      <div>
-        <p class="eyebrow">Live. Watch. Create.</p>
-        <h1>Live video, <em>live together.</em></h1>
-        <p class="lede">Watch live streams from around the world, cheer on PK battles, post reels with music, and send gifts to the hosts you love. Free to join, 18 and over.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
-            <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
-            Get it on Google Play
-          </a>
-          <a class="btn btn-ghost" href="app/">Open in your browser</a>
-        </div>
-      </div>
-      <div class="phones" aria-hidden="true">
-        <img class="shot back" src="screens/app-reels.jpg" alt="" width="640" height="1391">
-        <img class="shot front" src="screens/app-live.jpg" alt="" width="640" height="1391" fetchpriority="high">
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Reels. Live. Gifts.</p>
+      <h1>Where reels, live video <em>and friends meet.</em></h1>
+      <p class="lede">Scroll reels picked for you, go live, battle in PK, chat with your people and send gifts that light up the screen. Free to join, 18 and over.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">Get it on Google Play</a>
+        <a class="btn btn-ghost" href="app/">Open in your browser</a>
       </div>
     </div>
-
-    <dl class="facts">
-      <div class="fact"><dt>Access</dt><dd>Free to join, 18 and over</dd></div>
-      <div class="fact"><dt>Platform</dt><dd>Android and web now, iPhone coming soon</dd></div>
-      <div class="fact"><dt>Hosts</dt><dd>Earn from gifts, or as an affiliate</dd></div>
-    </dl>
-
-    <section id="screens" aria-labelledby="screens-h">
-      <div class="head">
-        <p class="eyebrow">Inside the app</p>
-        <h2 id="screens-h">Everything in <em>one app.</em></h2>
-        <p>A look at Dosho, from the first live to your own reel.</p>
-      </div>
-      <div class="gallery" tabindex="0" aria-label="App screens, scroll sideways">
-        <figure><img class="shot" src="screens/app-live.jpg" alt="Explore screen with live hosts" loading="lazy" width="640" height="1391"><figcaption><b>Explore</b>Hosts live right now</figcaption></figure>
-        <figure><img class="shot" src="screens/app-party.jpg" alt="List of live rooms" loading="lazy" width="640" height="1391"><figcaption><b>Live rooms</b>Join in and say hello</figcaption></figure>
-        <figure><img class="shot" src="screens/app-reels.jpg" alt="A reel playing full screen" loading="lazy" width="640" height="1391"><figcaption><b>Reels</b>Short videos with music</figcaption></figure>
-        <figure><img class="shot" src="screens/app-biggift.jpg" alt="A Rocket gift filling the whole screen" loading="lazy" width="640" height="1391"><figcaption><b>Big gifts</b>Animations that fill the screen</figcaption></figure>
-        <figure><img class="shot" src="screens/app-profile.jpg" alt="Profile with an avatar frame, level and coins" loading="lazy" width="640" height="1391"><figcaption><b>Profile</b>Frames, level and rewards</figcaption></figure>
-        <figure><img class="shot" src="screens/app-room.jpg" alt="Inside a live room with chat" loading="lazy" width="640" height="1391"><figcaption><b>Live chat</b>Chat, gifts and host levels</figcaption></figure>
-        <figure><img class="shot" src="screens/app-level.jpg" alt="Level, daily check-in and quests" loading="lazy" width="640" height="1391"><figcaption><b>Levels</b>Daily check-in and quests</figcaption></figure>
-        <figure><img class="shot" src="screens/app-store.jpg" alt="Store with avatar frames" loading="lazy" width="640" height="1391"><figcaption><b>Store</b>Frames, rides and themes</figcaption></figure>
-        <figure><img class="shot" src="screens/app-host.jpg" alt="Host center with tasks and contests" loading="lazy" width="640" height="1391"><figcaption><b>Host center</b>Tasks, levels and contests</figcaption></figure>
-        <figure><img class="shot" src="screens/app-ranking.jpg" alt="Weekly ranking" loading="lazy" width="640" height="1391"><figcaption><b>Ranking</b>Weekly and season boards</figcaption></figure>
-      </div>
-    </section>
-
-    <section aria-labelledby="how-h">
-      <div class="head">
-        <p class="eyebrow">How it works</p>
-        <h2 id="how-h">Watch, create, <em>connect.</em></h2>
-      </div>
-      <div class="pillars">
-        <article class="card">
-          <span class="tag">Live</span>
-          <h3>Lives and PK battles</h3>
-          <p>Watch hosts from around the world, join the live chat, and cheer for your favourite in a PK battle. Go live yourself in a few taps, with a beauty filter.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Reels</span>
-          <h3>Short videos with music</h3>
-          <p>Scroll reels picked for you, search hashtags, and make your own: record in the app, trim, add a look, text and music, or make a duet or a stitch.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Gifts</span>
-          <h3>Show some love</h3>
-          <p>Send animated gifts that light up the whole screen. Coins are optional and you only buy what you want. Level up, check in daily and collect avatar frames.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="earn" aria-labelledby="earn-h">
-      <div class="head">
-        <p class="eyebrow">For hosts</p>
-        <h2 id="earn-h">Two ways to <em>earn.</em></h2>
-      </div>
-      <div class="earn">
-        <article class="card">
-          <span class="tag">Hosts</span>
-          <h3>Earn from the gifts you get</h3>
-          <p>Go live, grow your audience and earn from the gifts viewers send you. Level up as a host with daily tasks and contests, and withdraw your earnings to M-Pesa or PayPal.</p>
-          <div class="example">Only earned coins can be withdrawn. Coins you buy stay in the app.</div>
-        </article>
-        <article class="card">
-          <span class="tag">Affiliate</span>
-          <h3>Share your code, earn for life</h3>
-          <p>Everyone is automatically an affiliate. Your username is your referral code, and you earn 5% of what the people who join through you earn. It's not a one-time bonus.</p>
-          <div class="example">Share a live, a reel or your profile with one tap</div>
-        </article>
-      </div>
-    </section>
-
-    <section id="safety" aria-labelledby="safety-h">
-      <div class="head">
-        <p class="eyebrow">Trust &amp; safety</p>
-        <h2 id="safety-h">Built on <em>trust.</em></h2>
-      </div>
-      <div class="trust">
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>18 and over only</h3><p>Every account confirms it meets our age requirement at sign-up.</p></article>
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Report and block</h3><p>Every profile and every live has report and block, and our team reviews reports.</p></article>
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Moderated lives</h3><p>Hosts and their moderators can mute, remove or ban people in a live, and chat is checked for abuse.</p></article>
-        <article class="card"><span class="dot" aria-hidden="true"></span><h3>Your wallet is protected</h3><p>Balances and charges are calculated on our servers, not your device. <a href="/private-by-design.html" style="color:var(--petal)">See everything we do</a>.</p></article>
-      </div>
-    </section>
-
-    <section aria-labelledby="cta-h">
-      <div class="cta">
-        <p class="eyebrow">Ready?</p>
-        <h2 id="cta-h">Start <em>today.</em></h2>
-        <p>Free to join. Coins are optional.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">
-            <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
-            Get it on Google Play
-          </a>
-          <a class="btn btn-ghost" href="app/">Open in your browser</a>
-        </div>
-      </div>
-    </section>
+    <div class="fan" aria-hidden="true">
+      <div class="phone a"><img src="screens/new-03-inbox.jpg" alt="" width="377" height="818"></div>
+      <div class="phone c"><img src="screens/new-04-profile-with-reels.jpg" alt="" width="377" height="818"></div>
+      <div class="phone b"><img src="screens/new-01-home-explore.jpg" alt="" width="377" height="818" fetchpriority="high"></div>
+    </div>
   </div>
-</main>
 
+  <dl class="facts">
+    <div class="fact"><dt>Access</dt><dd>Free to join, 18 and over</dd></div>
+    <div class="fact"><dt>Platform</dt><dd>Android and web now, iPhone coming soon</dd></div>
+    <div class="fact"><dt>Creators</dt><dd>Earn from gifts, or as an affiliate</dd></div>
+  </dl>
+
+  <section id="inside" aria-labelledby="inside-h">
+    <div class="head">
+      <p class="eyebrow">Inside the app</p>
+      <h2 id="inside-h">Everything in <em>one app.</em></h2>
+      <p>Home, Live, Create, Inbox and Me. Five tabs, no clutter.</p>
+    </div>
+    <div class="row">
+      <div class="shots"><div class="phone"><img src="screens/new-01-home-explore.jpg" alt="Home with Explore reels" loading="lazy" width="377" height="818"></div><div class="phone"><img src="screens/new-02-home-following.jpg" alt="Following feed" loading="lazy" width="377" height="818"></div></div>
+      <div>
+        <span class="tag">Reels</span>
+        <h3>Reels picked for you</h3>
+        <p>For You learns what you enjoy. Explore shows what is popular and Following shows the people you follow.</p>
+        <ul><li>Search words, #hashtags, people and sounds</li><li>Tap the spinning record to open a sound and use it</li><li>Share a reel as a link, repost it or add it to your story</li></ul>
+      </div>
+    </div>
+    <div class="row flip">
+      <div class="shots"><div class="phone"><img src="screens/new-06-create-menu.jpg" alt="Create menu" loading="lazy" width="377" height="818"></div><div class="phone"><img src="screens/new-05-search.jpg" alt="Search" loading="lazy" width="377" height="818"></div></div>
+      <div>
+        <span class="tag">Create</span>
+        <h3>Make videos and photo posts</h3>
+        <p>One simple editor for reels and photos.</p>
+        <ul><li>Trim, split, change speed, add transitions, text and stickers</li><li>Free-licence music, your own voiceover, up to 10 photos per post</li><li>Post sharp, with a cover you choose</li></ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="shots"><div class="phone"><img src="screens/new-03-inbox.jpg" alt="Inbox" loading="lazy" width="377" height="818"></div><div class="phone"><img src="screens/new-04-profile-with-reels.jpg" alt="Profile" loading="lazy" width="377" height="818"></div></div>
+      <div>
+        <span class="tag">People</span>
+        <h3>Your profile, your people</h3>
+        <p>Chat with voice messages, stickers and gifts. Post a status for 24 hours, and share your profile as a link or QR code.</p>
+        <ul><li>Banner, picture, bio, followers and views on every post</li><li>Sign in with Google or your email</li><li>My Activity shows your screen time, with bedtime and break reminders</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="live-h">
+    <div class="head">
+      <p class="eyebrow">Live</p>
+      <h2 id="live-h">Go live. <em>Battle. Gift.</em></h2>
+    </div>
+    <div class="cards">
+      <article class="card"><span class="tag">Live</span><h3>Lives and party rooms</h3><p>Go live in a few taps with built-in beauty tools, or join a party room and talk together on stage seats.</p></article>
+      <article class="card"><span class="tag">PK</span><h3>PK battles</h3><p>Two creators side by side, a countdown and a live score. Whoever gets the most gifts wins.</p></article>
+      <article class="card"><span class="tag">Gifts</span><h3>Animated gifts</h3><p>Tap Combo to send the same gift again and build a streak everyone sees. Level up and collect avatar frames. Coins are optional.</p></article>
+    </div>
+  </section>
+
+  <section id="earn" aria-labelledby="earn-h">
+    <div class="head"><p class="eyebrow">Creators</p><h2 id="earn-h">Two ways to <em>earn.</em></h2></div>
+    <div class="cards">
+      <article class="card"><span class="tag">Gifts</span><h3>Earn from the gifts you get</h3><p>Go live, grow your audience and earn from gifts. Verified creators can also lock posts for coins. Withdraw to M-Pesa or PayPal once your ID is verified.</p><p class="note">Only earned coins can be withdrawn. Coins you buy stay in the app.</p></article>
+      <article class="card"><span class="tag">Affiliate</span><h3>Share your code, earn for life</h3><p>Your username is your referral code. You earn 5% of what the people who join through you earn, not a one-time bonus.</p><p class="note">Share a live, a reel or your profile with one tap.</p></article>
+    </div>
+  </section>
+
+  <section id="safety" aria-labelledby="safety-h">
+    <div class="head"><p class="eyebrow">Trust &amp; safety</p><h2 id="safety-h">Built on <em>trust.</em></h2></div>
+    <div class="cards">
+      <article class="card"><h3>18 and over only</h3><p>Every account confirms it meets our age requirement at sign-up.</p></article>
+      <article class="card"><h3>Report and block</h3><p>Every profile and every live has report and block, and our team reviews reports.</p></article>
+      <article class="card"><h3>Moderated lives</h3><p>Hosts and moderators can mute, remove or ban people, and chat is checked for abuse.</p></article>
+      <article class="card"><h3>Your wallet is protected</h3><p>Balances and charges are calculated on our servers, not your device. <a href="/private-by-design.html" style="color:var(--petal)">See everything we do</a>.</p></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="cta-h">
+    <div class="cta">
+      <p class="eyebrow">Ready?</p>
+      <h2 id="cta-h">Start <em>today.</em></h2>
+      <p>Free to join. Coins are optional.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.dosho.android">Get it on Google Play</a>
+        <a class="btn btn-ghost" href="app/">Open in your browser</a>
+      </div>
+    </div>
+  </section>
+</main>
 <footer>
   <div class="wrap">
     <span>&copy; 2026 Dosho. Operated by Sapplanta.</span>
