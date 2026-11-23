@@ -56,7 +56,7 @@
 <link rel="icon" type="image/png" href="favicon.png?v=2">
 <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preload" as="image" href="screens/new-01-home-explore.jpg">
+<link rel="preload" as="image" href="screens/store-home.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
@@ -108,6 +108,13 @@
   .fan .a{left:0;top:70px;transform:rotate(-7deg)}
   .fan .b{left:50%;transform:translateX(-50%);top:0;z-index:2;width:270px}
   .fan .c{right:0;top:70px;transform:rotate(7deg)}
+  .card-shot{position:absolute;width:250px;height:auto;border-radius:26px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 0 60px -10px rgba(214,31,196,.35)}
+  .fan .card-shot.a{left:0;top:70px;transform:rotate(-7deg)}
+  .fan .card-shot.b{left:50%;transform:translateX(-50%);top:0;z-index:2;width:270px}
+  .fan .card-shot.c{right:0;top:70px;transform:rotate(7deg)}
+  .gallery{display:flex;gap:1.2rem;overflow-x:auto;padding:.5rem .2rem 1.5rem;scroll-snap-type:x mandatory}
+  .gallery img{flex:0 0 250px;width:250px;height:auto;border-radius:24px;scroll-snap-align:start}
+  @media(max-width:860px){.card-shot{width:190px}.fan .card-shot.b{width:210px}.gallery img{flex-basis:210px;width:210px}}
   .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:5rem}
   .fact{background:var(--glass);border:1px solid var(--edge);border-radius:18px;padding:1.1rem 1.3rem;backdrop-filter:blur(14px)}
   .fact dt{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
@@ -173,9 +180,9 @@
       </div>
     </div>
     <div class="fan" aria-hidden="true">
-      <div class="phone a"><img src="screens/new-03-inbox.jpg" alt="" width="377" height="818"></div>
-      <div class="phone c"><img src="screens/new-04-profile-with-reels.jpg" alt="" width="377" height="818"></div>
-      <div class="phone b"><img src="screens/new-01-home-explore.jpg" alt="" width="377" height="818" fetchpriority="high"></div>
+      <img class="card-shot a" src="screens/store-chat.jpg" alt="" width="600" height="1067">
+      <img class="card-shot c" src="screens/store-profile.jpg" alt="" width="600" height="1067">
+      <img class="card-shot b" src="screens/store-home.jpg" alt="" width="600" height="1067" fetchpriority="high">
     </div>
   </div>
 
@@ -191,32 +198,19 @@
       <h2 id="inside-h">Everything in <em>one app.</em></h2>
       <p>Home, Live, Create, Inbox and Me. Five tabs, no clutter.</p>
     </div>
-    <div class="row">
-      <div class="shots"><div class="phone"><img src="screens/new-01-home-explore.jpg" alt="Home with Explore reels" loading="lazy" width="377" height="818"></div><div class="phone"><img src="screens/new-02-home-following.jpg" alt="Following feed" loading="lazy" width="377" height="818"></div></div>
-      <div>
-        <span class="tag">Reels</span>
-        <h3>Reels picked for you</h3>
-        <p>For You learns what you enjoy. Explore shows what is popular and Following shows the people you follow.</p>
-        <ul><li>Search words, #hashtags, people and sounds</li><li>Tap the spinning record to open a sound and use it</li><li>Share a reel as a link, repost it or add it to your story</li></ul>
-      </div>
+    <div class="gallery" tabindex="0" aria-label="App screens, scroll sideways">
+      <img src="screens/store-home.jpg" alt="Personalised video feed" loading="lazy" width="600" height="1067">
+      <img src="screens/store-explore.jpg" alt="Discover new creators" loading="lazy" width="600" height="1067">
+      <img src="screens/store-sound.jpg" alt="Find your next sound" loading="lazy" width="600" height="1067">
+      <img src="screens/store-profile.jpg" alt="Your own creator profile" loading="lazy" width="600" height="1067">
+      <img src="screens/store-chat.jpg" alt="Chat with your people" loading="lazy" width="600" height="1067">
+      <img src="screens/store-menu.jpg" alt="Everything in one menu" loading="lazy" width="600" height="1067">
+      <img src="screens/store-music.jpg" alt="Add music to every video" loading="lazy" width="600" height="1067">
     </div>
-    <div class="row flip">
-      <div class="shots"><div class="phone"><img src="screens/new-06-create-menu.jpg" alt="Create menu" loading="lazy" width="377" height="818"></div><div class="phone"><img src="screens/new-05-search.jpg" alt="Search" loading="lazy" width="377" height="818"></div></div>
-      <div>
-        <span class="tag">Create</span>
-        <h3>Make videos and photo posts</h3>
-        <p>One simple editor for reels and photos.</p>
-        <ul><li>Trim, split, change speed, add transitions, text and stickers</li><li>Free-licence music, your own voiceover, up to 10 photos per post</li><li>Post sharp, with a cover you choose</li></ul>
-      </div>
-    </div>
-    <div class="row">
-      <div class="shots"><div class="phone"><img src="screens/new-03-inbox.jpg" alt="Inbox" loading="lazy" width="377" height="818"></div><div class="phone"><img src="screens/new-04-profile-with-reels.jpg" alt="Profile" loading="lazy" width="377" height="818"></div></div>
-      <div>
-        <span class="tag">People</span>
-        <h3>Your profile, your people</h3>
-        <p>Chat with voice messages, stickers and gifts. Post a status for 24 hours, and share your profile as a link or QR code.</p>
-        <ul><li>Banner, picture, bio, followers and views on every post</li><li>Sign in with Google or your email</li><li>My Activity shows your screen time, with bedtime and break reminders</li></ul>
-      </div>
+    <div class="cards" style="margin-top:2rem">
+      <article class="card"><span class="tag">Reels</span><h3>Reels picked for you</h3><p>For You learns what you enjoy. Explore shows what is popular and Following shows the people you follow. Search words, #hashtags, people and sounds.</p></article>
+      <article class="card"><span class="tag">Create</span><h3>Make videos and photo posts</h3><p>Trim, split, change speed, add transitions, text and stickers, free-licence music and your own voiceover. Up to 10 photos per post.</p></article>
+      <article class="card"><span class="tag">People</span><h3>Your profile, your people</h3><p>Chat with voice messages, stickers and gifts. Post a status for 24 hours and share your profile as a link or QR code.</p></article>
     </div>
   </section>
 
